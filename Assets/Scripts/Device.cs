@@ -75,3 +75,49 @@ public abstract class HackableDevice : Device, IHackable
     /// </summary>
     public abstract void Hack();
 }
+
+/// <summary>
+/// Describes the files used by IDevice to describe their properties, NOT IMPLEMENTED YET!!!
+/// </summary>
+[System.Serializable]
+public struct File
+{
+    public string name;
+    public string contents;
+
+    public static File? LoadFile(IDevice device, string name)
+    {
+        return FileDatabase.LoadFile(device, name);
+    }
+
+    public void SaveFile(File file)
+    {
+        FileDatabase.SaveFile(file);
+    }
+}
+
+public class FileDatabase
+{
+    public static File? LoadFile(IDevice device, string name)
+    {
+        return null; //FIXME
+    }
+
+    public static void SaveFile(File file)
+    {
+        //TODO: Make this actually save the file
+    }
+}
+
+public static class DeviceHelper
+{
+    public static IDevice DeviceFromId(string id)
+    {
+        return null; //FIXME
+    }
+
+    public static string IdFromDevice(IDevice device)
+    {
+        return ""; //FIXME
+    }
+}
