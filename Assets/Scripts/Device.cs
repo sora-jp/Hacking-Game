@@ -20,7 +20,7 @@ public interface IDevice
 /// </summary>
 public interface IHackable : IDevice
 {
-    void Hack();
+    void Hack(Player player);
 }
 
 /// <summary>
@@ -73,7 +73,7 @@ public abstract class HackableDevice : Device, IHackable
     /// <summary>
     /// Hacks the device
     /// </summary>
-    public abstract void Hack();
+    public abstract void Hack(Player player);
 }
 
 /// <summary>
