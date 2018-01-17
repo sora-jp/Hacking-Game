@@ -83,6 +83,11 @@ public abstract class HackableDevice : Device, IHackable
     /// Hacks the device
     /// </summary>
     public abstract void Hack();
+    
+    public HackableDevice(File[] files) : base(files)
+    {
+
+    }
 }
 
 /// <summary>
@@ -100,6 +105,11 @@ public abstract class ConnectedDevice : Device, IConnectedDevice
     public virtual IDevice GetConnectedDevice()
     {
         return connectedDevice;
+    }
+
+    public ConnectedDevice(File[] files) : base(files)
+    {
+
     }
 }
 
