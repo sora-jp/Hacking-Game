@@ -13,7 +13,6 @@ public interface IDevice
     void Activate();
     void Deacticate();
     bool GetStatus();
-    IDevice GetConnectedDevice();
 }
 
 /// <summary>
@@ -25,12 +24,20 @@ public interface IHackable : IDevice
 }
 
 /// <summary>
+/// A device that is connected to another one
+/// </summary>
+public interface IConnectedDevice : IDevice
+{
+    IDevice GetConnectedDevice();
+}
+
+/// <summary>
 /// Base implementation of IDevice
 /// </summary>
-public abstract class Device : IDevice
+[System.Serializable]
+public abstract class Device : MonoBehaviour, IDevice
 {
     bool status; // Basically this varible changes state whether or not the device is active
-    IDevice connectedDevice; // You don't have to assign this, as long as you make sure that you never use GetConnectedDevice on it!
 
     /// <summary>
     /// Activates the device
@@ -56,13 +63,6 @@ public abstract class Device : IDevice
     {
         return status;
     }
-
-    /// <summary>
-    /// Returns the connected device <para></para>
-    /// NOTE: SHOULD NEVER BE USED WITHOUT NULL-CHECK!
-    /// </summary>
-    /// <returns>The connected device</returns>
-    public abstract IDevice GetConnectedDevice();
 }
 
 /// <summary>
@@ -74,6 +74,24 @@ public abstract class HackableDevice : Device, IHackable
     /// Hacks the device
     /// </summary>
     public abstract void Hack();
+}
+
+/// <summary>
+/// Base implementation of IConnectedDevice
+/// </summary>
+public abstract class ConnectedDevice : Device, IConnectedDevice
+{
+    public Device connectedDevice; // You HAVE to assign this!
+
+    /// <summary>
+    /// Returns the connected device <para></para>
+    /// NOTE: SHOULD NEVER BE USED WITHOUT NULL-CHECK!
+    /// </summary>
+    /// <returns>The connected device</returns>
+    public virtual IDevice GetConnectedDevice()
+    {
+        return connectedDevice;
+    }
 }
 
 /// <summary>
