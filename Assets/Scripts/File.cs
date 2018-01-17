@@ -11,9 +11,10 @@ public struct File
     public string name;
     public string contents;
 
-    public File(string path)
+    public File(string path, string name)
     {
-
+        this.contents = FileHelper.LoadFileFromComputer(path);
+        this.name = name;
     }
 
     public static File? LoadFile(IDevice device, string name)
@@ -32,6 +33,11 @@ public struct File
 /// </summary>
 public static class FileHelper {
 
+    /// <summary>
+    /// Reads a file from the computer. Make sure when using this method to have a correct path
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
     public static string LoadFileFromComputer(string path)
     {
         return System.IO.File.ReadAllText(path);
