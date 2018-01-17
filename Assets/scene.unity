@@ -130,7 +130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hackableLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 4294967295
+  doUpdate: 0
 --- !u!1 &1091973210
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +166,7 @@ GameObject:
   m_PrefabParentObject: {fileID: 1437953677314872, guid: 390dc02e86fe5b546bac48782f40c51d,
     type: 2}
   m_PrefabInternal: {fileID: 1747421694}
---- !u!65 &1093363178
+--- !u!65 &1093363181
 BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}

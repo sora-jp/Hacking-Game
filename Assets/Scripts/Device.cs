@@ -41,14 +41,6 @@ public abstract class Device : MonoBehaviour, IDevice
     FileDatabase fileDatabase; // The database wich keeps controll over all the files
 
     /// <summary>
-    /// The constructor wich initializes the filedatabase
-    /// </summary>
-    public Device(File[] files)
-    {
-        fileDatabase = new FileDatabase(files);
-    }
-
-    /// <summary>
     /// Activates the device
     /// </summary>
     public virtual void Activate()
@@ -82,16 +74,7 @@ public abstract class HackableDevice : Device, IHackable
     /// <summary>
     /// Hacks the device
     /// </summary>
-<<<<<<< HEAD
     public abstract void Hack(Player player);
-=======
-    public abstract void Hack();
-    
-    public HackableDevice(File[] files) : base(files)
-    {
-
-    }
->>>>>>> 32daf69c84cb3dce0f9bc7ca61f8c2f0b883d3b9
 }
 
 /// <summary>
@@ -109,11 +92,6 @@ public abstract class ConnectedDevice : Device, IConnectedDevice
     public virtual IDevice GetConnectedDevice()
     {
         return connectedDevice;
-    }
-
-    public ConnectedDevice(File[] files) : base(files)
-    {
-
     }
 }
 

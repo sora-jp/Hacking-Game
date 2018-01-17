@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class CameraDevice : HackableDevice {
     public new Camera camera;
+    Camera playerCam;
 
     private void Start()
     {
         if (camera == null) camera = GetComponentInChildren<Camera>();
         camera.enabled = false;
+        playerCam = Camera.main;
     }
 
     public override void Hack(Player player)
     {
-        Camera.main.enabled = false;
+        playerCam.transform.root.gameObject.SetActive(false);
         camera.enabled = true;
-        player.doUpdate = false;
         //Do stuff here, but later :)
     }
 
@@ -23,7 +24,7 @@ public class CameraDevice : HackableDevice {
     {
         if (Input.GetKeyDown(KeyCode.R) && camera.enabled)
         {
-            Camera.main.enabled = true;
+            playerCam.transform.root.gameObject.SetActive(true);
             camera.enabled = false;
         }
     }
