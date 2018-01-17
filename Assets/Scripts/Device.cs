@@ -38,6 +38,15 @@ public interface IConnectedDevice : IDevice
 public abstract class Device : MonoBehaviour, IDevice
 {
     bool status; // Basically this varible changes state whether or not the device is active
+    FileDatabase fileDatabase; // The database wich keeps controll over all the files
+
+    /// <summary>
+    /// The constructor wich initializes the filedatabase
+    /// </summary>
+    public Device(File[] files)
+    {
+        fileDatabase = new FileDatabase(files);
+    }
 
     /// <summary>
     /// Activates the device
