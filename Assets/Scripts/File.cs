@@ -13,7 +13,7 @@ public struct File
 
     public File(string path, string name)
     {
-        this.contents = FileHelper.LoadFileFromComputer(path);
+        contents = FileHelper.LoadFileFromComputer(path);
         this.name = name;
     }
 
@@ -51,6 +51,30 @@ public static class FileHelper {
 /// </summary>
 public class FileDatabase
 {
+    public Dictionary<string, File> files;
+
+    /// <summary>
+    /// Adds a file to the current database
+    /// </summary>
+    public void AddFile(File file)
+    {
+        files.Add(file.name, file);
+    }
+
+    /// <summary>
+    /// Initializes the database with a few files
+    /// </summary>
+    /// <param name="files">The files to add to the database</param>
+    public FileDatabase(File[] files)
+    {
+        this.files = new Dictionary<string, File>();
+
+        foreach(File file in files)
+        {
+            AddFile(file);
+        }
+    }
+
     /// <summary>
     /// Load a file stored on <paramref name="device"/>, with name <paramref name="name"/>
     /// </summary>
@@ -59,7 +83,7 @@ public class FileDatabase
     /// <returns>The loaded file, which may be null if the file does not exist. ALWAYS NULL CHECK!</returns>
     public static File? LoadFile(IDevice device, string name)
     {
-        return null; //FIXME
+        return null;
     }
 
     /// <summary>
