@@ -29,7 +29,7 @@ public interface IHackable : IDevice
 /// </summary>
 public abstract class Device : IDevice
 {
-    bool status;
+    bool status; // Basically this varible changes state whether or not the device is active
     IDevice connectedDevice; // You don't have to assign this, as long as you make sure that you never use GetConnectedDevice on it!
 
     /// <summary>
@@ -109,6 +109,9 @@ public class FileDatabase
     }
 }
 
+/// <summary>
+/// Helps with ids and objects
+/// </summary>
 public static class DeviceHelper
 {
     public static IDevice DeviceFromId(string id)
