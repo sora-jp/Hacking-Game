@@ -21,6 +21,7 @@ public interface IDevice
 public interface IHackable : IDevice
 {
     void Hack();
+    void Hack(Player player);
 }
 
 /// <summary>
@@ -82,6 +83,7 @@ public abstract class HackableDevice : Device, IHackable
 <<<<<<< HEAD
     public abstract void Hack();
 =======
+    public abstract void Hack(Player player);
 >>>>>>> 23912c24213cb49e2783322eb3d58ca647509520
 }
 
