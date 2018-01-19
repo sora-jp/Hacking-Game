@@ -20,7 +20,6 @@ public interface IDevice
 /// </summary>
 public interface IHackable : IDevice
 {
-    void Hack();
     void Hack(Player player);
 }
 
