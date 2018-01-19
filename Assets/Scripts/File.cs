@@ -3,18 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
+/// The different types of file formats. It's this that makes sure we get the right parser for the right file
+/// </summary>
+public enum FileType {
+    Connections
+}
+
+/// <summary>
 /// Describes the files used by IDevice to describe their properties, NOT IMPLEMENTED YET!!!
 /// </summary>
 [System.Serializable]
 public struct File
 {
     public string name;
-    public string contents;
+    public string content;
+    public FileType type;
 
-    public File(string path, string name)
+    /// <summary>
+    /// The initializer for the File. This reads the filedata and sets its values correspondingly
+    /// </summary>
+    /// <param name="path">The path of the file in text</param>
+    public File(string path)
     {
-        contents = FileHelper.LoadFileFromComputer(path);
-        this.name = name;
+        string contents = FileHelper.LoadFileFromComputer(path); // Read the filedata
+        string[] lines = contents.Remove(' ').Split('*'); // Set lines with the lines in the text and convert to a list
+        type = (FileType) System.Enum.Parse(typeof(FileType), lines[0]); // Set the type to the corresponding FileType
+        name = lines[1]; // Set the name to corresponding string
+        content = lines[2]; // Set the content to the last string wich wont include the data of the parser and the name
     }
 
     public static File? LoadFile(IDevice device, string name)
@@ -29,9 +44,26 @@ public struct File
 }
 
 /// <summary>
-/// Loads files
+/// Loads files and deals with parsers
 /// </summary>
 public static class FileHelper {
+
+    /// <summary>
+    /// A Dictionary wich maps from an enum filetype to the correct parser
+    /// </summary>
+    public static Dictionary<FileType, IParser> parserMap = new Dictionary<FileType, IParser>() {
+        {FileType.Connections, new ConnectionsParser()}
+    };
+
+    /// <summary>
+    /// Get the corresponding parser to the right file
+    /// </summary>
+    /// <param name="file">The file to get the parser from</param>
+    /// <returns></returns>
+    public static IParser GetParser(File file)
+    {
+        return parserMap[file.type];
+    }
 
     /// <summary>
     /// Reads a file from the computer. Make sure when using this method to have a correct path
@@ -51,29 +83,7 @@ public static class FileHelper {
 /// </summary>
 public class FileDatabase
 {
-    public Dictionary<string, File> files;
-
-    /// <summary>
-    /// Adds a file to the current database
-    /// </summary>
-    public void AddFile(File file)
-    {
-        files.Add(file.name, file);
-    }
-
-    /// <summary>
-    /// Initializes the database with a few files
-    /// </summary>
-    /// <param name="files">The files to add to the database</param>
-    public FileDatabase(File[] files)
-    {
-        this.files = new Dictionary<string, File>();
-
-        foreach(File file in files)
-        {
-            AddFile(file);
-        }
-    }
+    public static Dictionary<IDevice, Dictionary<string, File>> files;
 
     /// <summary>
     /// Load a file stored on <paramref name="device"/>, with name <paramref name="name"/>
@@ -83,7 +93,7 @@ public class FileDatabase
     /// <returns>The loaded file, which may be null if the file does not exist. ALWAYS NULL CHECK!</returns>
     public static File? LoadFile(IDevice device, string name)
     {
-        return null;
+        return files[device][name];
     }
 
     /// <summary>
@@ -91,8 +101,85 @@ public class FileDatabase
     /// </summary>
     /// <param name="file">The file to save</param>
     /// <param name="device">The device to save the file to</param>
+    /// <param name="name">The name to save the file as</param>
     public static void SaveFile(File file, IDevice device)
     {
-        //TODO: Make this actually save the file
+        //Do something here
     }
+    
+    /// <summary>
+    /// Adds a file to the global database on a specified IDevice
+    /// </summary>
+    /// <param name="path">The path of the file to add to the database</param>
+    /// <param name="device">The device this file is located on</param>
+    public static void AddFile(string path, IDevice device)
+    {
+        File file = new File(path); //Creates a new file from path
+        files[device][file.name] = file; // Adds or creates a new key with the file
+    }
+}
+
+/// <summary>
+/// The object that stores all of the parsed file data through keys.
+/// NOTE that when pulling keys you allways have to check if it exits
+/// </summary>
+public class FileData
+{
+    Dictionary<string, IData> data;
+
+    /// <summary>
+    /// Gets a piece of data from the dictionary with the correct key.
+    /// NOTE always check if the data exists before with the DataExists method.
+    /// </summary>
+    /// <param name="key">The name of the key of the data</param>
+    /// <returns></returns>
+    public IData GetData(string key)
+    {
+        return data[key];
+    }
+
+    /// <summary>
+    /// Checks if the certain data exists in the dictionary
+    /// </summary>
+    /// <param name="key">The name of the key of the data</param>
+    /// <returns></returns>
+    public bool DataExists(string key)
+    {
+        return data.ContainsKey(key);
+    }
+}
+
+/// <summary>
+/// The basic interface for all parsers
+/// </summary>
+public interface IParser
+{
+    FileData ParseFile(File file);
+}
+
+/// <summary>
+/// The 
+/// </summary>
+public class ConnectionsParser : IParser
+{
+    public FileData ParseFile(File file)
+    {
+        throw new System.NotImplementedException();
+    }
+}
+
+/// <summary>
+/// The basic empty interface for all data. Data should contain only one type of information like connections.
+/// </summary>
+public interface IData
+{
+
+}
+
+/// <summary>
+/// The basic data for connections
+/// </summary>
+public class ConnectionsData : IData
+{
+    
 }

@@ -38,15 +38,8 @@ public interface IConnectedDevice : IDevice
 public abstract class Device : MonoBehaviour, IDevice
 {
     bool status; // Basically this varible changes state whether or not the device is active
-    FileDatabase fileDatabase; // The database wich keeps controll over all the files
-
-    /// <summary>
-    /// The constructor wich initializes the filedatabase
-    /// </summary>
-    public Device(File[] files)
-    {
-        fileDatabase = new FileDatabase(files);
-    }
+    FileData fileData; // The data of the files connected to this object
+    public string[] filePaths; // The paths to the files. This is edited in the editor
 
     /// <summary>
     /// Activates the device
@@ -83,11 +76,6 @@ public abstract class HackableDevice : Device, IHackable
     /// Hacks the device
     /// </summary>
     public abstract void Hack();
-    
-    public HackableDevice(File[] files) : base(files)
-    {
-
-    }
 }
 
 /// <summary>
@@ -105,11 +93,6 @@ public abstract class ConnectedDevice : Device, IConnectedDevice
     public virtual IDevice GetConnectedDevice()
     {
         return connectedDevice;
-    }
-
-    public ConnectedDevice(File[] files) : base(files)
-    {
-
     }
 }
 
