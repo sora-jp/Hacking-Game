@@ -1,2 +1,7 @@
 Connections*
 Connections.cnt*
+
+connections:
+<1>
+<2>
+END
