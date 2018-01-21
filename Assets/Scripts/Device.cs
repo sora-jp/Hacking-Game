@@ -40,7 +40,7 @@ public abstract class Device : MonoBehaviour, IDevice
 {
     bool status; // Basically this varible changes state whether or not the device is active
     FileData fileData; // The data of the files connected to this object
-    public string[] filePaths; // The paths to the files. This is edited in the editor
+    public string[] filePaths; // The paths to the files. This is edited in the editor. FLAWED
 
 
     /// <summary>
