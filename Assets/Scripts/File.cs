@@ -20,7 +20,7 @@ public struct File
     public FileType type;
 
     /// <summary>
-    /// The initializer for the File. This reads the filedata and sets its values correspondingly
+    /// The initializer for the File. This reads the filedata and sets its values correspondingly. FLAWED
     /// </summary>
     /// <param name="path">The path of the file in text</param>
     public File(string path)
@@ -72,7 +72,7 @@ public static class FileHelper {
     /// <returns></returns>
     public static string LoadFileFromComputer(string path)
     {
-        return System.IO.File.ReadAllText(path);
+        return System.IO.File.ReadAllText(path); // FLAWED
     }
 
 }
@@ -108,14 +108,14 @@ public class FileDatabase
     }
     
     /// <summary>
-    /// Adds a file to the global database on a specified IDevice
+    /// Adds a file to the global database on a specified IDevice. PATH SHOULD NOT BE AN ACTUAL PATH CAUSE YOU CANT DO DAT SHIT
     /// </summary>
     /// <param name="path">The path of the file to add to the database</param>
     /// <param name="device">The device this file is located on</param>
     public static void AddFile(string path, IDevice device)
     {
         File file = new File(path); //Creates a new file from path
-        files[device][file.name] = file; // Adds or creates a new key with the file
+        files[device][file.name] = file; // Adds or creates a new key with the file. FLAWED. Actually throws an error when key doesn't exist!!!
     }
 }
 
@@ -158,7 +158,7 @@ public interface IParser
 }
 
 /// <summary>
-/// The 
+/// The thing is lit fam
 /// </summary>
 public class ConnectionsParser : IParser
 {
@@ -169,11 +169,11 @@ public class ConnectionsParser : IParser
 }
 
 /// <summary>
-/// The basic empty interface for all data. Data should contain only one type of information like connections.
+/// The basic empty interface for all data. Data should contain only one type of information like connections. FLAWED
 /// </summary>
 public interface IData
 {
-
+    //IData is an interface, which means it can't contain variables by itself. Consider using System.Object instead
 }
 
 /// <summary>
