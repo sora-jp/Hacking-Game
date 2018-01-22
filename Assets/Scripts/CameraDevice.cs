@@ -6,6 +6,8 @@ public class CameraDevice : HackableDevice {
     public new Camera camera;
     Camera playerCam;
     
+    public LayerMask hackableLayer;
+    
     float angleX;
     float angleY;
     
@@ -27,6 +29,11 @@ public class CameraDevice : HackableDevice {
     public override void Hack(Player player)
     {
         playerCam.transform.root.gameObject.SetActive(false);
+        
+        foreach(Camera c in FindObjectsOfType<Camera>()) {
+            c.enabled = false;
+        }
+        
         camera.enabled = true;
         //Do stuff here, but later :)
     }
