@@ -40,12 +40,13 @@ public abstract class Device : MonoBehaviour, IDevice
     bool status; // Basically this varible changes state whether or not the device is active
     FileData fileData; // The data of the files connected to this object
     public string[] filePaths; // The paths to the files. This is edited in the editor
-    string[] fileNames;
+    string[] fileNames; //The names of the files
+    public TextAsset[] texts;
 
     private void Awake()
     {
-        fileNames = FileDatabase.AddFiles(filePaths, this);
-        fileData = FileHelper.ParseFiles(fileNames, this);
+        fileNames = FileDatabase.AddFiles(filePaths, this); //Add the files to the database
+        fileData = FileHelper.ParseFiles(fileNames, this); //Parse he files and save them in the filedata
         foreach(string connection in ((ConnectionsData) fileData.GetData(DataType.Connections)).connections)
         {
             print(connection);
