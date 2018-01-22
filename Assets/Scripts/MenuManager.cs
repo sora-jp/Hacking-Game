@@ -9,18 +9,7 @@ public class MenuManager : MonoBehaviour
     public static Animator anim;
     public string lastState;
 
-    public bool MouseVisible {
-        set {
-            if (value)
-            {
-                Cursor.lockState = CursorLockMode.None;
-            } else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-            Cursor.visible = value;
-        }
-    }
+    public bool mouseVisible;
 
     public void LoadMainMenu() { anim.SetTrigger("MainMenu"); lastState = "MainMenu"; }
     public void UnloadMenu() { anim.SetTrigger("Unload"); lastState = "Unload"; }
@@ -39,5 +28,18 @@ public class MenuManager : MonoBehaviour
         {
             LoadMainMenu();
         }
+    }
+
+    private void OnValidate()
+    {
+        if (mouseVisible)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        Cursor.visible = value;
     }
 }
