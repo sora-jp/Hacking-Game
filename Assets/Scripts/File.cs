@@ -1,11 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
+
 
 /// <summary>
 /// The different types of file formats. It's this that makes sure we get the right parser for the right file
 /// </summary>
-public enum FileType {
+public enum FileType
+{
+    Connections
+}
+
+public enum DataType
+{
     Connections
 }
 
@@ -26,10 +34,10 @@ public struct File
     public File(string path)
     {
         string contents = FileHelper.LoadFileFromComputer(path); // Read the filedata
-        string[] lines = contents.Remove(' ').Split('*'); // Set lines with the lines in the text and convert to a list
-        type = (FileType) System.Enum.Parse(typeof(FileType), lines[0]); // Set the type to the corresponding FileType
+        string[] lines = contents.Trim().Split('*'); // Set lines with the lines in the text and convert to a list
+        type = (FileType)System.Enum.Parse(typeof(FileType), lines[0]); // Set the type to the corresponding FileType
         name = lines[1]; // Set the name to corresponding string
-        content = lines[2]; // Set the content to the last string wich wont include the data of the parser and the name
+        content = lines[2].Trim(); ; // Set the content to the last string wich wont include the data of the parser and the name
     }
 
     public static File? LoadFile(IDevice device, string name)
@@ -46,7 +54,8 @@ public struct File
 /// <summary>
 /// Loads files and deals with parsers
 /// </summary>
-public static class FileHelper {
+public static class FileHelper
+{
 
     /// <summary>
     /// A Dictionary wich maps from an enum filetype to the correct parser
@@ -60,9 +69,8 @@ public static class FileHelper {
     /// </summary>
     /// <param name="file">The file to get the parser from</param>
     /// <returns></returns>
-    public static IParser? GetParser(File file)
+    public static IParser GetParser(File file)
     {
-        if (!parserMap.ContainsKey(file.type)) return null;
         return parserMap[file.type];
     }
 
@@ -76,6 +84,34 @@ public static class FileHelper {
         return System.IO.File.ReadAllText(path); // FLAWED
     }
 
+    /// <summary>
+    /// Parses a file from the database
+    /// </summary>
+    /// <param name="name">The name of the file to parse</param>
+    /// <param name="device">The device this file is on</param>
+    public static Data[] ParseFile(string name, IDevice device)
+    {
+        File file = FileDatabase.LoadFile(device, name); //Loads the file from the database
+        Data[] data = GetParser(file).ParseFile(file); // Finds the parser and parses the file
+        return data;
+    }
+
+    /// <summary>
+    /// Parses a bunch of files from an array of names
+    /// </summary>
+    /// <param name="names">The names of the files to parse</param>
+    /// <param name="device">The device theese files are on</param>
+    public static FileData ParseFiles(string[] names, IDevice device)
+    {
+        List<Data> data = new List<Data>(); //The array wich the data is stored in
+
+        foreach (string name in names)
+        {
+            data.AddRange(ParseFile(name, device)); //Add the currently parsed data to the array
+        }
+
+        return new FileData(data.ToArray()); // Return a new filedata with the parsed data
+    }
 }
 
 /// <summary>
@@ -84,7 +120,7 @@ public static class FileHelper {
 /// </summary>
 public class FileDatabase
 {
-    public static Dictionary<IDevice, Dictionary<string, File>> files;
+    public static Dictionary<IDevice, Dictionary<string, File>> files = new Dictionary<IDevice, Dictionary<string, File>>();
 
     /// <summary>
     /// Load a file stored on <paramref name="device"/>, with name <paramref name="name"/>
@@ -92,12 +128,9 @@ public class FileDatabase
     /// <param name="device">The device that the file is linked to</param>
     /// <param name="name">The name of the file on the device</param>
     /// <returns>The loaded file, which may be null if the file does not exist. ALWAYS NULL CHECK!</returns>
-    public static File? LoadFile(IDevice device, string name)
+    public static File LoadFile(IDevice device, string name)
     {
-        if (!files.ContainsKey(device)) return null;
-        var d = files[device];
-        if (!d.ContainsKey(name)) return null;
-        return d[name];
+        return files[device][name];
     }
 
     /// <summary>
@@ -110,22 +143,39 @@ public class FileDatabase
     {
         //Do something here
     }
-    
+
     /// <summary>
     /// Adds a file to the global database on a specified IDevice. PATH SHOULD NOT BE AN ACTUAL PATH CAUSE YOU CANT DO DAT SHIT
     /// </summary>
     /// <param name="path">The path of the file to add to the database</param>
     /// <param name="device">The device this file is located on</param>
-    public static void AddFile(string path, IDevice device)
+    /// <returns>The name of the file</returns>
+    public static string AddFile(string path, IDevice device)
     {
         File file = new File(path); //Creates a new file from path
-        files[device][file.name] = file; // Adds or creates a new key with the file. FLAWED. Actually throws an error when key doesn't exist!!!
-    }
-    
-    public static void AddFiles(IDevice device, params string[] path) {
-        foreach (var f in path) {
-            AddFile(f, device);
+
+        if (!files.ContainsKey(device))
+        {
+            files.Add(device, new Dictionary<string, File>()); //Adds a new dictionery in the device if it doesn't exist already
         }
+
+        files[device].Add(file.name, file); //Adds the file to the database
+        return file.name;
+    }
+
+    /// <summary>
+    /// Adds an array of files to the database
+    /// </summary>
+    /// <param name="paths">A string array containing all the paths</param>
+    /// <param name="device">The device to save the files on</param>
+    public static string[] AddFiles(string[] paths, IDevice device)
+    {
+        List<string> names = new List<string>();
+        foreach (string path in paths)
+        {
+            names.Add(AddFile(path, device));
+        }
+        return names.ToArray();
     }
 }
 
@@ -135,7 +185,15 @@ public class FileDatabase
 /// </summary>
 public class FileData
 {
-    Dictionary<string, IData> data;
+    Dictionary<DataType, Data> data = new Dictionary<DataType, Data>();
+
+    public FileData(Data[] theData)
+    {
+        foreach (Data data in theData)
+        {
+            this.data.Add(data.GetDataType(), data);
+        }
+    }
 
     /// <summary>
     /// Gets a piece of data from the dictionary with the correct key.
@@ -143,10 +201,9 @@ public class FileData
     /// </summary>
     /// <param name="key">The name of the key of the data</param>
     /// <returns></returns>
-    public IData? GetData(string key)
+    public Data GetData(DataType type)
     {
-        if (!DataExists(key)) return null;
-        return data[key];
+        return data[type];
     }
 
     /// <summary>
@@ -154,9 +211,9 @@ public class FileData
     /// </summary>
     /// <param name="key">The name of the key of the data</param>
     /// <returns></returns>
-    public bool DataExists(string key)
+    public bool DataExists(DataType type)
     {
-        return data.ContainsKey(key);
+        return data.ContainsKey(type);
     }
 }
 
@@ -165,32 +222,81 @@ public class FileData
 /// </summary>
 public interface IParser
 {
-    FileData ParseFile(File file);
+    Data[] ParseFile(File file);
 }
 
 /// <summary>
+/// The parser for connection files
 /// The thing is lit fam
 /// </summary>
 public class ConnectionsParser : IParser
 {
-    public FileData ParseFile(File file)
+    public Data[] ParseFile(File file)
     {
-        return new FileData();
+        bool inConnectionBlock = false;
+        List<string> connections = new List<string>();
+
+        string[] lines = Regex.Split(file.content, "\n");
+        foreach (string line in lines)
+        {
+            if (Regex.IsMatch(line, "END")) //If the keyword END shows up the connections list is over
+            {
+                inConnectionBlock = false;
+            }
+
+            if (inConnectionBlock) // If the in a connections list we add those conections to the list
+            {
+                connections.Add(line); //Add the connection to the list
+            }
+
+            if (Regex.IsMatch(line, "connections:")) //If the keyword "connections:" the connection list is begining
+            {
+                inConnectionBlock = true;
+            }
+        }
+        return new Data[1] { new ConnectionsData(connections.ToArray()) };
     }
 }
 
 /// <summary>
-/// The basic empty interface for all data. Data should contain only one type of information like connections. FLAWED
+/// The basic class for all data. Data should contain only one type of information like connections.
 /// </summary>
-public interface IData
+public abstract class Data
 {
-    //IData is an interface, which means it can't contain variables by itself. Consider using System.Object instead
+    private DataType type;
+
+    /// <summary>
+    /// Basic constructor for Data
+    /// </summary>
+    /// <param name="type"></param>
+    public Data(DataType type)
+    {
+        this.type = type;
+    }
+
+    /// <summary>
+    /// Returns the name of the type of data. This is used for saving in a FileData
+    /// </summary>
+    /// <returns>The name of this data</returns>
+    public DataType GetDataType()
+    {
+        return type;
+    }
 }
 
 /// <summary>
 /// The basic data for connections
 /// </summary>
-public class ConnectionsData : IData
+public class ConnectionsData : Data
 {
-    
+    public string[] connections;
+
+    /// <summary>
+    /// The base constructor wich assigns the connected devices
+    /// </summary>
+    /// <param name="connections"></param>
+    public ConnectionsData(string[] connections) : base(DataType.Connections)
+    {
+        this.connections = connections;
+    }
 }
