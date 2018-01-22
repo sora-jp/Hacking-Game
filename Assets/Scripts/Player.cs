@@ -39,6 +39,7 @@ public class Player : MonoBehaviour {
             // Hit something
             var device = hit.transform.root.GetComponent<IDevice>();
             return device;
-        }    
+        }
+        return null;
     }
 }

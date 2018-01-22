@@ -7,13 +7,12 @@ public class MenuManager : MonoBehaviour
 {
 
     public static Animator anim;
-    public string lastState;
 
     public bool mouseVisible;
 
-    public void LoadMainMenu() { anim.SetTrigger("MainMenu"); lastState = "MainMenu"; }
-    public void UnloadMenu() { anim.SetTrigger("Unload"); lastState = "Unload"; }
-    public void LoadOptions() { anim.SetTrigger("OptionsMenu"); lastState = "OptionsMenu"; }
+    public void LoadMainMenu() { anim.SetTrigger("MainMenu");}
+    public void UnloadMenu() { anim.SetTrigger("Unload"); }
+    public void LoadOptions() { anim.SetTrigger("OptionsMenu");}
     public void EndGame() { Application.Quit(); }
     public void Back() { anim.SetTrigger("Back"); }
 
