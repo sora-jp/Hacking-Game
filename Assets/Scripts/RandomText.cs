@@ -24,7 +24,7 @@ public class RandomText : MonoBehaviour
             
             if (str.Count >= arrLength) str.RemoveAt(str.Count-1);
             
-            text.text = Array.Join("\n", str.ToArray());
+            text.text = string.Join("\n", str.ToArray());
             
             yield return new WaitForSecondsRealtime(timeBetweenShit);
         }
@@ -33,7 +33,7 @@ public class RandomText : MonoBehaviour
     public static string GetRandomAlphaNumeric(int length)
     {
         var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        return new string(chars.Select(c => chars[random.Next(chars.Length)]).Take(length).ToArray());
+        return new string(chars.Select(c => chars[Random.Range(0, chars.Length)]).Take(length).ToArray());
     }
     
     void Start() 
