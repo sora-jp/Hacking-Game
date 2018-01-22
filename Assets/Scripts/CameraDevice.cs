@@ -61,7 +61,7 @@ public class CameraDevice : HackableDevice {
             {
                 if (Input.GetMouseButtonDown(0) && device is IHackable) 
                 {
-                    ((IHackable)device).Hack();
+                    ((IHackable)device).Hack(null);
                 }
             }
         }
