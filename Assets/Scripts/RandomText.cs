@@ -22,7 +22,7 @@ public class RandomText : MonoBehaviour
             string s = GetRandomAlphaNumeric(Random.Range(minl, maxl));
             str.Insert(0, s);
             
-            if (str.Count >= arrLength) str.Remove(str.Count-1);
+            if (str.Count >= arrLength) str.RemoveAt(str.Count-1);
             
             text.text = Array.Join("\n", str.ToArray());
             
