@@ -40,6 +40,6 @@ public class MenuManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
-        Cursor.visible = value;
+        Cursor.visible =  mouseVisible;
     }
 }
