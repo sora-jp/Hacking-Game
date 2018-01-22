@@ -39,5 +39,6 @@ public class RandomText : MonoBehaviour
     void Start() 
     {
         str = new List<string>(arrLength);
+        StartCoroutine(co());
     }
 }
