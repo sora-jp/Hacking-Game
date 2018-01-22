@@ -15,8 +15,22 @@ public class Player : MonoBehaviour {
     void Update ()
     {
         if (!doUpdate) return;
+		var device = GetDeviceUnderCursor(Camera.main, hackableLayer);
+		if (device != null)
+		{
+			// Hit a device
+			Debug.Log("YEEEEEEEEEEEEEEEEEE");
 
-        // Get a Ray from the center of the screen, so we can check what is under the cursor
+			if (Input.GetMouseButtonDown(0) && device is IHackable)
+			{
+				// Hack the device we hit
+				(device as IHackable).Hack(this);
+			}
+		}
+    }
+	
+    public static IDevice GetDeviceUnderCursor(Camera c, LayerMask layer) {
+	// Get a Ray from the center of the screen, so we can check what is under the cursor
         var ray = Camera.main.ViewportPointToRay(Vector3.one * 0.5f);
         RaycastHit hit;
 
@@ -24,15 +38,7 @@ public class Player : MonoBehaviour {
         {
             // Hit something
             var device = hit.transform.root.GetComponent<IDevice>();
-            if (device == null) return;
-            // Hit a device
-            Debug.Log("YEEEEEEEEEEEEEEEEEE");
-
-            if (Input.GetMouseButtonDown(0) && device is IHackable)
-            {
-                // Hack the device we hit
-                (device as IHackable).Hack(this);
-            }
-        }
-	}
+            return device;
+        }    
+    }
 }
