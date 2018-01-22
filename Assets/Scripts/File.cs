@@ -121,6 +121,12 @@ public class FileDatabase
         File file = new File(path); //Creates a new file from path
         files[device][file.name] = file; // Adds or creates a new key with the file. FLAWED. Actually throws an error when key doesn't exist!!!
     }
+    
+    public static void AddFiles(IDevice device, params string[] path) {
+        foreach (var f in path) {
+            AddFile(f, device);
+        }
+    }
 }
 
 /// <summary>
