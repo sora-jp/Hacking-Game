@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class MenuManager : MonoBehaviour
 {
@@ -8,15 +9,16 @@ public class MenuManager : MonoBehaviour
     public static Animator anim;
     public string lastState;
 
-    public bool mouseVisible;
     public bool MouseVisible {
-        get {
-            return mouseVisible;
-        }
-
         set {
-            mouseVisible = value;
-            //FindObjectOfType<Pla>
+            if (value)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            } else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            Cursor.visible = value;
         }
     }
 
