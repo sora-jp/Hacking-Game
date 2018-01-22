@@ -9,6 +9,9 @@ public class CameraDevice : HackableDevice {
     float angleX;
     float angleY;
     
+    public float sx = 1;
+    public float sy = 1;
+    
     public float minAX = -150;
     public float maxAX = 150;
     public float minAY = -75;
@@ -38,8 +41,8 @@ public class CameraDevice : HackableDevice {
         
         if (camera.enabled) 
         {
-            float dx = Input.GetAxisRaw("MouseX");
-            float dy = Input.GetAxisRaw("MouseY");
+            float dx = Input.GetAxisRaw("MouseX") * sx;
+            float dy = Input.GetAxisRaw("MouseY") * sy;
             
             angleX = Mathf.Clamp(angleX + dx, minAX, maxAX);
             angleY = Mathf.Clamp(angleY + dy, minAY, maxAY);
