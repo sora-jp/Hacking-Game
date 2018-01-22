@@ -48,6 +48,15 @@ public class CameraDevice : HackableDevice {
             angleY = Mathf.Clamp(angleY + dy, minAY, maxAY);
             
             transform.rotation = Quaternion.Euler(angleY, angleX, 0);
+            
+            var device = Player.GetDeviceUnderCursor(camera, 0xffff);
+            if (device != null) 
+            {
+                if (Input.GetMouseButtonDown(0) && device is IHackable) 
+                {
+                    ((IHackable)device).Hack();
+                }
+            }
         }
     }
 }
