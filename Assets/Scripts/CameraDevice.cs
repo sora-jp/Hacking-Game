@@ -44,8 +44,8 @@ public class CameraDevice : HackableDevice {
             float dx = Input.GetAxisRaw("Mouse X") * sx;
             float dy = Input.GetAxisRaw("Mouse Y") * sy;
             
-            angleX = Mathf.Clamp(angleX + dx, minAX, maxAX);
-            angleY = Mathf.Clamp(angleY + dy, minAY, maxAY);
+            angleX = Mathf.Clamp(angleX + dx, minAY, maxAY);
+            angleY = Mathf.Clamp(angleY + dy, minAX, maxAX);
             
             transform.rotation = Quaternion.Euler(angleY, angleX, 0);
         }
