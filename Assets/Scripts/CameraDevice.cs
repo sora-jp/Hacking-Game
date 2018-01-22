@@ -5,6 +5,14 @@ using UnityEngine;
 public class CameraDevice : HackableDevice {
     public new Camera camera;
     Camera playerCam;
+    
+    float angleX;
+    float angleY;
+    
+    public float minAX = -150;
+    public float maxAX = 150;
+    public float minAY = -75;
+    public float maxAY = 75;
 
     private void Start()
     {
@@ -26,6 +34,17 @@ public class CameraDevice : HackableDevice {
         {
             playerCam.transform.root.gameObject.SetActive(true);
             camera.enabled = false;
+        }
+        
+        if (camera.enabled) 
+        {
+            float dx = Input.GetAxisRaw("MouseX");
+            float dy = Input.GetAxisRaw("MouseY");
+            
+            angleX = Mathf.Clamp(angleX + dx, minAX, maxAX);
+            angleY = Mathf.Clamp(angleY + dy, minAY, maxAY);
+            
+            transform.rotation = Quaternion.Euler(angleY, angleX, 0);
         }
     }
 }
