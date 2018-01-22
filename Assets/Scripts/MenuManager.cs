@@ -15,7 +15,7 @@ public class MenuManager : MonoBehaviour
     public void UnloadMenu() { anim.SetTrigger("Unload"); lastState = "Unload"; }
     public void LoadOptions() { anim.SetTrigger("OptionsMenu"); lastState = "OptionsMenu"; }
     public void EndGame() { Application.Quit(); }
-    public void Back() { anim.SetTrigger("Back");  }
+    public void Back() { anim.SetTrigger("Back"); }
 
     private void Start()
     {
@@ -28,18 +28,18 @@ public class MenuManager : MonoBehaviour
         {
             LoadMainMenu();
         }
-    }
 
-    private void OnValidate()
-    {
-        if (mouseVisible)
+        if (mouseVisible != Cursor.visible)
         {
-            Cursor.lockState = CursorLockMode.None;
+            if (mouseVisible)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            Cursor.visible = mouseVisible;
         }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        Cursor.visible =  mouseVisible;
     }
 }
