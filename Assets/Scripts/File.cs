@@ -27,7 +27,7 @@ public struct File
     public FileType type;
 
     /// <summary>
-    /// The initializer for the File. This reads the filedata and sets its values correspondingly
+    /// The initializer for the File. This reads the filedata and sets its values correspondingly. FLAWED
     /// </summary>
     /// <param name="path">The path of the file in text</param>
     public File(string path)
@@ -79,7 +79,7 @@ public static class FileHelper {
     /// <returns></returns>
     public static string LoadFileFromComputer(string path)
     {
-        return System.IO.File.ReadAllText(path);
+        return System.IO.File.ReadAllText(path); // FLAWED
     }
 
     /// <summary>
@@ -143,7 +143,7 @@ public class FileDatabase
     }
     
     /// <summary>
-    /// Adds a file to the global database on a specified IDevice
+    /// Adds a file to the global database on a specified IDevice. PATH SHOULD NOT BE AN ACTUAL PATH CAUSE YOU CANT DO DAT SHIT
     /// </summary>
     /// <param name="path">The path of the file to add to the database</param>
     /// <param name="device">The device this file is located on</param>
@@ -225,6 +225,7 @@ public interface IParser
 
 /// <summary>
 /// The parser for connection files
+/// The thing is lit fam
 /// </summary>
 public class ConnectionsParser : IParser
 {
