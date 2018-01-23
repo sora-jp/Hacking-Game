@@ -20,7 +20,7 @@ public class RandomText : MonoBehaviour
         while(true) 
         {
             string s = GetRandomAlphaNumeric(Random.Range(minl, maxl));
-            str.Enqueue(0, s);
+            str.Enqueue(s);
             
             if (str.Count >= arrLength) str.Dequeue();
             
