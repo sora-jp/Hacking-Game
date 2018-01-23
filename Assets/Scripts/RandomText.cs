@@ -13,16 +13,16 @@ public class RandomText : MonoBehaviour
     public int minl;
     public int maxl;
     
-    List<string> str;
+    Queue<string> str;
     
     IEnumerator co() 
     {
         while(true) 
         {
             string s = GetRandomAlphaNumeric(Random.Range(minl, maxl));
-            str.Insert(0, s);
+            str.Enqueue(0, s);
             
-            if (str.Count >= arrLength) str.RemoveAt(str.Count-1);
+            if (str.Count >= arrLength) str.Dequeue();
             
             text.text = string.Join("\n", str.ToArray());
             
@@ -38,7 +38,7 @@ public class RandomText : MonoBehaviour
     
     void Start() 
     {
-        str = new List<string>(arrLength);
+        str = new Queue<string>(arrLength);
         StartCoroutine(co());
     }
 }
