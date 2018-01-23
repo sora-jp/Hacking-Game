@@ -25,7 +25,6 @@ public class RandomText : MonoBehaviour
             if (str.Count >= arrLength) str.RemoveAt(str.Count-1);
             
             text.text = string.Join("\n", str.ToArray());
-            
             yield return new WaitForSecondsRealtime(timeBetweenShit);
         }
     }
@@ -39,6 +38,11 @@ public class RandomText : MonoBehaviour
     void Start() 
     {
         str = new List<string>(arrLength);
+        StartCoroutine(co());
+    }
+
+    private void OnEnable()
+    {
         StartCoroutine(co());
     }
 }

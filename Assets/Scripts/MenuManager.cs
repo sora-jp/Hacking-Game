@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour
     public void LoadOptions() { anim.SetTrigger("OptionsMenu");}
     public void EndGame() { Application.Quit(); }
     public void Back() { anim.SetTrigger("Back"); }
+    public void LoadMap() { anim.SetTrigger("Map"); }
 
     private void Start()
     {

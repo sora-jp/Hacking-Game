@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
     public LayerMask hackableLayer;
     public bool doUpdate;
+    public Image cursor;
+    public Sprite normalCursor;
+    public Sprite hitCursor;
 
     private void Awake()
     {
@@ -14,12 +18,15 @@ public class Player : MonoBehaviour {
 
     void Update ()
     {
+        cursor.sprite = normalCursor;
+
         if (!doUpdate) return;
 		var device = GetDeviceUnderCursor(Camera.main, hackableLayer);
 		if (device != null)
 		{
 			// Hit a device
 			Debug.Log("YEEEEEEEEEEEEEEEEEE");
+            cursor.sprite = hitCursor;
 
 			if (Input.GetMouseButtonDown(0) && device is IHackable)
 			{

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraDevice : HackableDevice {
     public new Camera camera;
@@ -18,6 +19,10 @@ public class CameraDevice : HackableDevice {
     public float maxAX = 150;
     public float minAY = -75;
     public float maxAY = 75;
+
+    public Image cursor;
+    public Sprite normalCursor;
+    public Sprite hitCursor;
 
     private void Start()
     {
@@ -40,6 +45,8 @@ public class CameraDevice : HackableDevice {
 
     private void Update()
     {
+        cursor.sprite = normalCursor;
+
         if (Input.GetKeyDown(KeyCode.R) && camera.enabled)
         {
             playerCam.transform.root.gameObject.SetActive(true);
@@ -59,6 +66,7 @@ public class CameraDevice : HackableDevice {
             var device = Player.GetDeviceUnderCursor(camera, hackableLayer);
             if (device != null) 
             {
+                cursor.sprite = hitCursor;
                 if (Input.GetMouseButtonDown(0) && device is IHackable) 
                 {
                     ((IHackable)device).Hack(null);

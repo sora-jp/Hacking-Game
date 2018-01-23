@@ -30,10 +30,10 @@ public struct File
     /// <summary>
     /// The initializer for the File. This reads the filedata and sets its values correspondingly. FLAWED
     /// </summary>
-    /// <param name="path">The path of the file in text</param>
-    public File(string path)
+    /// <param name="asset">The file to load</param>
+    public File(TextAsset asset)
     {
-        string contents = FileHelper.LoadFileFromComputer(path); // Read the filedata
+        string contents = asset.text; // Read the filedata
         string[] lines = contents.Trim().Split('*'); // Set lines with the lines in the text and convert to a list
         type = (FileType)System.Enum.Parse(typeof(FileType), lines[0]); // Set the type to the corresponding FileType
         name = lines[1]; // Set the name to corresponding string
@@ -72,16 +72,6 @@ public static class FileHelper
     public static IParser GetParser(File file)
     {
         return parserMap[file.type];
-    }
-
-    /// <summary>
-    /// Reads a file from the computer. Make sure when using this method to have a correct path
-    /// </summary>
-    /// <param name="path"></param>
-    /// <returns></returns>
-    public static string LoadFileFromComputer(string path)
-    {
-        return System.IO.File.ReadAllText(path); // FLAWED
     }
 
     /// <summary>
@@ -147,12 +137,12 @@ public class FileDatabase
     /// <summary>
     /// Adds a file to the global database on a specified IDevice. PATH SHOULD NOT BE AN ACTUAL PATH CAUSE YOU CANT DO DAT SHIT
     /// </summary>
-    /// <param name="path">The path of the file to add to the database</param>
+    /// <param name="file">The file to add to the database</param>
     /// <param name="device">The device this file is located on</param>
     /// <returns>The name of the file</returns>
-    public static string AddFile(string path, IDevice device)
+    public static string AddFile(TextAsset asset, IDevice device)
     {
-        File file = new File(path); //Creates a new file from path
+        File file = new File(asset); //Creates a new file from path
 
         if (!files.ContainsKey(device))
         {
@@ -166,14 +156,14 @@ public class FileDatabase
     /// <summary>
     /// Adds an array of files to the database
     /// </summary>
-    /// <param name="paths">A string array containing all the paths</param>
+    /// <param name="assets">The files to add</param>
     /// <param name="device">The device to save the files on</param>
-    public static string[] AddFiles(string[] paths, IDevice device)
+    public static string[] AddFiles(TextAsset[] assets, IDevice device)
     {
         List<string> names = new List<string>();
-        foreach (string path in paths)
+        foreach (TextAsset asset in assets)
         {
-            names.Add(AddFile(path, device));
+            names.Add(AddFile(asset, device));
         }
         return names.ToArray();
     }

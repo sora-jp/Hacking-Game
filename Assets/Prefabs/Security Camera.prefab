@@ -277,9 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8db578e54ac7f4780cd854d4bcc9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filePaths:
-  - C:\Users\Alexander\Documents\GitHub\Hacking-Game\Assets\Template Files\Connections.txt
-  texts: []
+  assets:
+  - {fileID: 4900000, guid: 3c080d648ece33b4d8e5f2709c04ea2b, type: 3}
   camera: {fileID: 20981947063337674}
   hackableLayer:
     serializedVersion: 2
@@ -290,6 +289,9 @@ MonoBehaviour:
   maxAX: 150
   minAY: -75
   maxAY: 75
+  cursor: {fileID: 0}
+  normalCursor: {fileID: 21300000, guid: b55444251900671439696088cee12f01, type: 3}
+  hitCursor: {fileID: 21300002, guid: b55444251900671439696088cee12f01, type: 3}
 --- !u!114 &114800012424940298
 MonoBehaviour:
   m_ObjectHideFlags: 1
