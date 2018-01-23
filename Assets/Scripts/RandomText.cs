@@ -24,7 +24,13 @@ public class RandomText : MonoBehaviour
             
             if (str.Count >= arrLength) str.Dequeue();
             
-            text.text = string.Join("\n", str.ToArray());
+            text.text = "";
+            
+            foreach(var st in str)
+            {
+                text.text += st + "\n";
+            }
+            
             yield return new WaitForSecondsRealtime(timeBetweenShit);
         }
     }
