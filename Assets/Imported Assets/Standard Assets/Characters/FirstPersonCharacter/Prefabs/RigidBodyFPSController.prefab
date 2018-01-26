@@ -176,7 +176,7 @@ MonoBehaviour:
     MaximumX: 90
     smooth: 0
     smoothTime: 18
-    lockCursor: 0
+    lockCursor: 1
   advancedSettings:
     groundCheckDistance: 0.1
     stickToGroundHelperDistance: 0.6
