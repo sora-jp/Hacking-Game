@@ -12,7 +12,14 @@ public class HackmapModes : MonoBehaviour {
 
     public ConnectionMode mode;
 
-	public void SetMode (string mode)
+    public LinkedList powerStartingPoints, internetStartingPoints;
+
+    public void Awake()
+    {
+        powerStartingPoints, internetStartingPoints = new LinkedList(new List<Node>());
+    }
+
+    public void SetMode (string mode)
     {
         this.mode = (ConnectionMode) Enum.Parse(typeof(ConnectionMode), mode);
     }
