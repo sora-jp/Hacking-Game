@@ -17,6 +17,8 @@ public class RandomText : MonoBehaviour
     
     IEnumerator co() 
     {
+        yield return null;
+
         while(true) 
         {
             string s = GetRandomAlphaNumeric(Random.Range(minl, maxl));
