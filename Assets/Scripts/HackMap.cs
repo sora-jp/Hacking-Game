@@ -1,20 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class HackMap : MonoBehaviour {
+public enum ConnectionMode
+{
+    Power, Internet
+}
 
-    public GameObject nodePrefab;
+public class Hackmap : MonoBehaviour {
 
-    public Node[] startNodes;
+    public ConnectionMode mode;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public LinkedList powerStartingPoints, internetStartingPoints;
+
+    public void SetMode (string mode)
+    {
+        this.mode = (ConnectionMode) Enum.Parse(typeof(ConnectionMode), mode);
+    }
 }

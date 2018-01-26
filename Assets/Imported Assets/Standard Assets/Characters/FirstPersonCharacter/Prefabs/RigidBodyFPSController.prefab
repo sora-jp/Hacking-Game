@@ -86,7 +86,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: 0.15
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -175,7 +175,7 @@ MonoBehaviour:
     MaximumX: 90
     smooth: 0
     smoothTime: 18
-    lockCursor: 1
+    lockCursor: 0
   advancedSettings:
     groundCheckDistance: 0.1
     stickToGroundHelperDistance: 0.6
