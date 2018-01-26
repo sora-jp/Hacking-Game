@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CameraDevice : HackableDevice {
     public new Camera camera;
     Camera playerCam;
+    bool isActive;
     
     public LayerMask hackableLayer;
     
@@ -28,49 +29,58 @@ public class CameraDevice : HackableDevice {
     {
         if (camera == null) camera = GetComponentInChildren<Camera>();
         camera.enabled = false;
+        isActive = false;
         playerCam = Camera.main;
     }
 
     public override void Hack(Player player)
     {
-        playerCam.transform.root.gameObject.SetActive(false);
-        
-        foreach(Camera c in FindObjectsOfType<Camera>()) {
-            c.enabled = false;
-        }
-        
-        camera.enabled = true;
+        StartCoroutine(cHack());
         //Do stuff here, but later :)
     }
 
-    private void Update()
+    IEnumerator cHack()
     {
+        yield return new WaitForEndOfFrame();
+        playerCam.transform.root.gameObject.SetActive(false);
+        isActive = true;
+        camera.enabled = true;
+    }
+
+    void Update()
+    {
+        if (!isActive) return;
         cursor.sprite = normalCursor;
 
-        if (Input.GetKeyDown(KeyCode.R) && camera.enabled)
+        if (Input.GetKeyDown(KeyCode.R))
         {
             playerCam.transform.root.gameObject.SetActive(true);
             camera.enabled = false;
         }
-        
-        if (camera.enabled) 
+
+        float dx = Input.GetAxisRaw("Mouse X") * sx;
+        float dy = Input.GetAxisRaw("Mouse Y") * sy;
+            
+        angleX = Mathf.Clamp(angleX + dx, minAX, maxAX);
+        angleY = Mathf.Clamp(angleY + dy, minAY, maxAY);
+            
+        transform.localRotation = Quaternion.Euler(angleY, angleX, 0);
+        Ray ray;
+        RaycastHit h;
+        var device = Player.GetDeviceUnderCursor(camera, hackableLayer, out ray, out h);
+        if (device != null) 
         {
-            float dx = Input.GetAxisRaw("Mouse X") * sx;
-            float dy = Input.GetAxisRaw("Mouse Y") * sy;
-            
-            angleX = Mathf.Clamp(angleX + dx, minAX, maxAX);
-            angleY = Mathf.Clamp(angleY + dy, minAY, maxAY);
-            
-            transform.rotation = Quaternion.Euler(angleY, angleX, 0);
-            
-            var device = Player.GetDeviceUnderCursor(camera, hackableLayer);
-            if (device != null) 
+            Debug.Log("Hit Device!");
+            cursor.sprite = hitCursor;
+            Debug.DrawLine(ray.origin, h.point, Color.green);
+            if (Input.GetMouseButtonDown(0) && device is IHackable) 
             {
-                cursor.sprite = hitCursor;
-                if (Input.GetMouseButtonDown(0) && device is IHackable) 
+                if (device is CameraDevice)
                 {
-                    ((IHackable)device).Hack(null);
+                    isActive = false;
+                    camera.enabled = false;
                 }
+                (device as IHackable).Hack(null);
             }
         }
     }
