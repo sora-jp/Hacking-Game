@@ -10,9 +10,16 @@ public enum ConnectionMode
 
 public class Hackmap : MonoBehaviour {
 
+    public ConnectionMode[] unlockedModes;
+
     public ConnectionMode mode;
 
     public LinkedList powerStartingPoints, internetStartingPoints;
+
+    public void Start()
+    {
+        unlockedModes = new ConnectionMode[] { ConnectionMode.Internet };
+    }
 
     public void SetMode (string mode)
     {
