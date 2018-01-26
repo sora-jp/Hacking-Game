@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Hacking;
 
 public class CameraDevice : HackableDevice {
     public new Camera camera;
