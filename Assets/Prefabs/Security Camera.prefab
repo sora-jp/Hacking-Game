@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 4316437907589054}
   - component: {fileID: 20981947063337674}
   - component: {fileID: 114462338777809782}
+  - component: {fileID: 114946319140996550}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -150,13 +151,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1538903340596856}
-  m_LocalRotation: {x: 0, y: 0.80250525, z: 0.5966451, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -0.05, y: 0.3, z: -1.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4190030120359182}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -73.26, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4638360244819638
 Transform:
   m_ObjectHideFlags: 1
@@ -192,7 +193,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0.09
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -200,7 +201,7 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 0
+  m_HDR: 1
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
@@ -446,6 +447,18 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114946319140996550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1538903340596856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 49421f4de46278a4a9fc21b119ccd5ae, type: 2}
 --- !u!222 &222939892496432926
 CanvasRenderer:
   m_ObjectHideFlags: 1
