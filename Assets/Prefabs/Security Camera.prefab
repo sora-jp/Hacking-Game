@@ -38,6 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4316437907589054}
   - component: {fileID: 20981947063337674}
+  - component: {fileID: 114462338777809782}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -71,7 +72,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4190030120359182}
   - component: {fileID: 114504811692090342}
-  - component: {fileID: 114800012424940298}
   m_Layer: 0
   m_Name: Security Camera
   m_TagString: Untagged
@@ -266,6 +266,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.02006206, y: 0.016888376, z: 0.013849955}
   m_Center: {x: -0.00016149822, y: 0.008397351, z: 0.0033155277}
+--- !u!114 &114462338777809782
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1538903340596856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4babeda87bcb5041800b45fc6b1bda4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mat: {fileID: 2100000, guid: 1f8831d8512c2d648bad2c1b2693c5ba, type: 2}
 --- !u!114 &114504811692090342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -292,15 +304,3 @@ MonoBehaviour:
   cursor: {fileID: 0}
   normalCursor: {fileID: 21300000, guid: 6a298278cbe71b4418eb4f74659ac851, type: 3}
   hitCursor: {fileID: 21300000, guid: 8ea457c1fecc5e5478876675849faa22, type: 3}
---- !u!114 &114800012424940298
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1936031444775752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4babeda87bcb5041800b45fc6b1bda4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mat: {fileID: 2100000, guid: 1f8831d8512c2d648bad2c1b2693c5ba, type: 2}

@@ -3,7 +3,9 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
+		_BandTex("Banding texture", 2D) = "black" {}
 		_Str ("Strength", Range(0,1)) = 1
+		_Size("Effect Size", Float) = 50
 		_Col ("Color", Color) = (1,1,1,1)
 	}
 	SubShader
@@ -35,14 +37,11 @@
 			};
 
 			sampler2D _MainTex;
+			sampler2D _BandTex;
 			float4 _MainTex_ST;
 			float _Str;
+			float _Size;
 			fixed4 _Col;
-
-			float4 horizBars(float2 p)
-			{
-				return 1 - saturate(round(abs(frac(p.y * 100) * 2)));
-			}
 			
 			v2f vert (appdata v)
 			{
@@ -59,7 +58,7 @@
 				fixed4 col = tex2D(_MainTex, i.uv);
 				// apply fog
 				UNITY_APPLY_FOG(i.fogCoord, col);
-				return col + horizBars(i.uv) * _Str * _Col;
+				return col + tex2D(_BandTex, i.uv * _Size) * _Str * _Col;
 			}
 			ENDCG
 		}
