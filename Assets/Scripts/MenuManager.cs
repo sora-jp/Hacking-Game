@@ -29,8 +29,7 @@ public class MenuManager : MonoBehaviour
             LoadMainMenu();
         }
 
-        if (mouseVisible != Cursor.visible)
-        {
+        if (mouseVisible != Cursor.visible) {
             if (mouseVisible)
             {
                 Cursor.lockState = CursorLockMode.None;
