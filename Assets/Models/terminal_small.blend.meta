@@ -6,15 +6,46 @@ ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Big_Terminal
+    100004: Left
+    100006: Middle
+    100008: Right
+    100010: Terminal
+    100012: Upper
     400000: //RootNode
+    400002: Big_Terminal
+    400004: Left
+    400006: Middle
+    400008: Right
+    400010: Terminal
+    400012: Upper
     2100000: Base
     2100002: Screen_Edge
     2100004: Screen
     2100006: Accents
     2100008: Vents
+    2100010: Material_001
+    2100012: Material_002
     2300000: //RootNode
+    2300002: Big_Terminal
+    2300004: Left
+    2300006: Middle
+    2300008: Right
+    2300010: Terminal
+    2300012: Upper
     3300000: //RootNode
+    3300002: Big_Terminal
+    3300004: Left
+    3300006: Middle
+    3300008: Right
+    3300010: Terminal
+    3300012: Upper
     4300000: Terminal
+    4300002: Big_Terminal
+    4300004: Upper
+    4300006: Left
+    4300008: Right
+    4300010: Middle
     7400000: Default Take
     9500000: //RootNode
   externalObjects:
@@ -28,6 +59,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Base
     second: {fileID: 2100000, guid: 2d779ab829fbc2f4a8555ce8ca43eb3e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_001
+    second: {fileID: 2100000, guid: 2d779ab829fbc2f4a8555ce8ca43eb3e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_002
+    second: {fileID: 2100000, guid: b75ec794bbf15cc4bb97b21678c90d23, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -80,7 +121,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
