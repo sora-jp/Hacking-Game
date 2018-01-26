@@ -292,6 +292,7 @@ MonoBehaviour:
   assets:
   - {fileID: 4900000, guid: 3c080d648ece33b4d8e5f2709c04ea2b, type: 3}
   camera: {fileID: 20981947063337674}
+  graphics: {fileID: 1437953677314872}
   hackableLayer:
     serializedVersion: 2
     m_Bits: 4294967295

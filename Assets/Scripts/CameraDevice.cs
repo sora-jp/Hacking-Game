@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CameraDevice : HackableDevice {
     public new Camera camera;
+    public GameObject graphics;
     Camera playerCam;
     bool isActive;
     
@@ -42,6 +43,7 @@ public class CameraDevice : HackableDevice {
     IEnumerator cHack()
     {
         yield return new WaitForEndOfFrame();
+        graphics.SetActive(false);
         playerCam.transform.root.gameObject.SetActive(false);
         isActive = true;
         camera.enabled = true;
@@ -56,6 +58,8 @@ public class CameraDevice : HackableDevice {
         {
             playerCam.transform.root.gameObject.SetActive(true);
             camera.enabled = false;
+            isActive = false;
+            graphics.SetActive(true);
         }
 
         float dx = Input.GetAxisRaw("Mouse X") * sx;
@@ -64,7 +68,7 @@ public class CameraDevice : HackableDevice {
         angleX = Mathf.Clamp(angleX + dx, minAX, maxAX);
         angleY = Mathf.Clamp(angleY + dy, minAY, maxAY);
             
-        transform.localRotation = Quaternion.Euler(angleY, angleX, 0);
+        camera.transform.localRotation = Quaternion.Euler(-angleY, angleX + 180, 0);
         Ray ray;
         RaycastHit h;
         var device = Player.GetDeviceUnderCursor(camera, hackableLayer, out ray, out h);
@@ -79,6 +83,7 @@ public class CameraDevice : HackableDevice {
                 {
                     isActive = false;
                     camera.enabled = false;
+                    graphics.SetActive(true);
                 }
                 (device as IHackable).Hack(null);
             }
