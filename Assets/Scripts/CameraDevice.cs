@@ -6,6 +6,7 @@ using Hacking;
 
 public class CameraDevice : HackableDevice {
     public new Camera camera;
+    public GameObject ui;
     public GameObject graphics;
     Camera playerCam;
     bool isActive;
@@ -31,6 +32,7 @@ public class CameraDevice : HackableDevice {
     {
         if (camera == null) camera = GetComponentInChildren<Camera>();
         camera.enabled = false;
+        ui.SetActive(false);
         isActive = false;
         playerCam = Camera.main;
     }
@@ -45,6 +47,7 @@ public class CameraDevice : HackableDevice {
     {
         yield return new WaitForEndOfFrame();
         graphics.SetActive(false);
+        ui.SetActive(true);
         playerCam.transform.root.gameObject.SetActive(false);
         isActive = true;
         camera.enabled = true;
@@ -59,6 +62,7 @@ public class CameraDevice : HackableDevice {
         {
             playerCam.transform.root.gameObject.SetActive(true);
             camera.enabled = false;
+            ui.SetActive(false);
             isActive = false;
             graphics.SetActive(true);
         }
@@ -85,6 +89,7 @@ public class CameraDevice : HackableDevice {
                     isActive = false;
                     camera.enabled = false;
                     graphics.SetActive(true);
+                    ui.SetActive(false);
                 }
                 (device as IHackable).Hack(null);
             }
