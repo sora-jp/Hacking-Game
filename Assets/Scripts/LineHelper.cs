@@ -16,16 +16,16 @@ namespace Hacking
         /// <param name="easePow">How much to ease the line. 0 = not eased</param>
         /// <param name="down">True if the line will be used downwards, else false. Defaults to false</param>
         /// <returns>An array containing all the points in the line</returns>
-        public static Vector2[] GetEasedLine(Vector2 start, Vector2 end, int iterations, float easePow, bool down = true)
+        public static Vector3[] GetEasedLine(Vector2 start, Vector2 end, int iterations, float easePow, bool down = true)
         {
-            List<Vector2> output = new List<Vector2>();
+            List<Vector3> output = new List<Vector3>();
 
             for(int i = 0; i < iterations; i++)
             {
                 float ix = (float)i / (iterations-1);
                 float x = Lerp(start.x, end.x, down ? Ease(ix, easePow + 1) : ix); // Position on x axis
                 float y = Lerp(start.y, end.y, !down ? Ease(ix, easePow + 1) : ix); // Position on y axis
-                output.Add(new Vector2(x, y));
+                output.Add(new Vector3(x, y));
             }
 
             return output.ToArray();
@@ -38,13 +38,13 @@ namespace Hacking
         /// <param name="end">The end point of the line</param>
         /// <param name="iterations">How many segments to create. Defaults to 2</param>
         /// <returns>An array containing all the points in the line</returns>
-        public static Vector2[] GetStraightLine(Vector2 start, Vector2 end, int iterations = 2)
+        public static Vector3[] GetStraightLine(Vector2 start, Vector2 end, int iterations = 2)
         {
-            List<Vector2> output = new List<Vector2>();
+            List<Vector3> output = new List<Vector3>();
 
             for (int i = 0; i < iterations; i++)
             {
-                output.Add(Vector2.Lerp(start, end, (float)i / (iterations-1)));
+                output.Add(Vector3.Lerp(start, end, (float)i / (iterations-1)));
             }
 
             return output.ToArray();
