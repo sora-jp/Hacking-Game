@@ -32,15 +32,18 @@ public class Hackmap : MonoBehaviour {
     /// </summary>
     public ConnectionMode mode;
 
-    public void Start()
+    private void Awake()
     {
-        UnlockMode(ConnectionMode.Internet); //Unlock a mode
-
         //Defines the dictionary which maps from mode to button
         modeToButton = new Dictionary<ConnectionMode, GameObject>() {
             { ConnectionMode.Internet, InternetButton.gameObject },
             { ConnectionMode.Power, PowerButton.gameObject }
         };
+    }
+
+    private void Start()
+    {
+        UnlockMode(ConnectionMode.Internet); //Unlock a mode
     }
 
     /// <summary>
@@ -54,6 +57,8 @@ public class Hackmap : MonoBehaviour {
         //Activate the unlocked mode buttons
         foreach (ConnectionMode m in unlockedModes)
         {
+            Debug.Log(m.ToString());
+            Debug.Log("Key exists: " + modeToButton.ContainsKey(m));
             modeToButton[m].SetActive(true);
         }
     }
