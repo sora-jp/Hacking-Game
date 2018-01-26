@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: ffdb8003e37fb984f88afd352e4fc075
+timeCreated: 1516554974
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Hackney Block Outline
+  fontNames:
+  - Hackney Block Outline
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: ba57981ce5c482d4cb986457f07ffebf, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

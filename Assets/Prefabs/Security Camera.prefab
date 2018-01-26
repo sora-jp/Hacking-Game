@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4638360244819638}
   - component: {fileID: 33543001641789614}
   - component: {fileID: 23032919600235660}
+  - component: {fileID: 65936900266323468}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -70,6 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4190030120359182}
   - component: {fileID: 114504811692090342}
+  - component: {fileID: 114800012424940298}
   m_Layer: 0
   m_Name: Security Camera
   m_TagString: Untagged
@@ -252,6 +254,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1437953677314872}
   m_Mesh: {fileID: 4300000, guid: f7041b822b03ac04cb1a9d6dfe7324ff, type: 3}
+--- !u!65 &65936900266323468
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1437953677314872}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.02006206, y: 0.016888376, z: 0.013849955}
+  m_Center: {x: -0.00016149822, y: 0.008397351, z: 0.0033155277}
 --- !u!114 &114504811692090342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -263,4 +277,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8db578e54ac7f4780cd854d4bcc9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
+  assets:
+  - {fileID: 4900000, guid: 3c080d648ece33b4d8e5f2709c04ea2b, type: 3}
+  camera: {fileID: 20981947063337674}
+  hackableLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  sx: 1
+  sy: 1
+  minAX: -150
+  maxAX: 150
+  minAY: -75
+  maxAY: 75
+  cursor: {fileID: 0}
+  normalCursor: {fileID: 21300000, guid: b55444251900671439696088cee12f01, type: 3}
+  hitCursor: {fileID: 21300002, guid: b55444251900671439696088cee12f01, type: 3}
+--- !u!114 &114800012424940298
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1936031444775752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4babeda87bcb5041800b45fc6b1bda4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mat: {fileID: 2100000, guid: 1f8831d8512c2d648bad2c1b2693c5ba, type: 2}

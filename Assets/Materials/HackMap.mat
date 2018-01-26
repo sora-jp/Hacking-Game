@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: img2
-  m_Shader: {fileID: 4800000, guid: c488db2c06a22df4eb9da2187f739a41, type: 3}
+  m_Name: HackMap
+  m_Shader: {fileID: 4800000, guid: e259af6a18e77cf45bff8c3baaed2988, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -39,7 +39,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: bfee6c831c3e72544a5619b29eabf292, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -54,7 +54,13 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ShapeTex:
+        m_Texture: {fileID: 2800000, guid: 855100d8d2e7d214fb2c8fbd231e52f3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AdjustmentX: 36.99
+    - _AdjustmentY: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -69,10 +75,10 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Str: 0.142
     - _UVSec: 0
+    - _XAdjustment: 6.84
+    - _YAdjustment: 0
     - _ZWrite: 1
     m_Colors:
-    - _Col: {r: 0.36764717, g: 1, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
