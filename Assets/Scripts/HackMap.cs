@@ -42,6 +42,11 @@ public class Hackmap : MonoBehaviour {
     /// </summary>
     public Sprite selectedSprite;
 
+    /// <summary>
+    /// The currently viewed node
+    /// </summary>
+    private Node currentNode;
+
     private void Awake()
     {
         //Defines the dictionary which maps from mode to button
@@ -87,5 +92,14 @@ public class Hackmap : MonoBehaviour {
         this.mode = (ConnectionMode) Enum.Parse(typeof(ConnectionMode), mode);
 
         modeToButton[this.mode].GetComponent<Image>().sprite = selectedSprite;
+    }
+
+    /// <summary>
+    /// Set the currently viewed node
+    /// </summary>
+    /// <param name="node">The node to view</param>
+    public void SetCurrentNode (Node node)
+    {
+        currentNode = node;
     }
 }

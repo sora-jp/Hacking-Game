@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Node : MonoBehaviour {
 
     public Dictionary<ConnectionMode, LinkedList> connections;
@@ -10,10 +11,31 @@ public class Node : MonoBehaviour {
     /// All variables below are set in the inspector
     /// </summary>
     public Node[] powerChilds;
-    public Node[] internetChilds;
-
     public Node powerParent;
-    public Node internetParent;
+
+    /// <summary>
+    /// Theese nodes are somehow contained in the nodes parents/children relations
+    /// </summary>
+    [HideInInspector] public List<Node> internetChildren = new List<Node>();
+    [HideInInspector] public Node internetParent;
+
+    private void Awake()
+    {
+        if (transform.parent.GetComponent<Node>() != null)
+        {
+            internetParent = transform.parent.GetComponent<Node>();
+        }
+
+        foreach(Node n in transform.Find("Children").GetComponentsInChildren<Node>())
+        {
+            internetChildren.Add(n);
+        }
+    }
+
+    public void MakeCurrentNode()
+    {
+        FindObjectOfType<Hackmap>().SetCurrentNode(this);
+    }
 }
 
 /// <summary>
