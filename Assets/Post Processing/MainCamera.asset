@@ -14,9 +14,9 @@ MonoBehaviour:
   debugViews:
     m_Enabled: 1
     m_Settings:
-      mode: 0
+      mode: 5
       depth:
-        scale: 1
+        scale: 0.014
       motionVectors:
         sourceOpacity: 1
         motionImageOpacity: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
         motionVectorsResolution: 24
         motionVectorsAmplitude: 64
   fog:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       excludeSkybox: 1
   antialiasing:
@@ -101,8 +101,8 @@ MonoBehaviour:
     m_Settings:
       bloom:
         intensity: 0.5
-        threshold: 1.1
-        softKnee: 0.466
+        threshold: 1.28
+        softKnee: 0.262
         radius: 4.71
         antiFlicker: 1
       lensDirt:

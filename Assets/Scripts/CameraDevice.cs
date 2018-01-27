@@ -28,12 +28,15 @@ public class CameraDevice : HackableDevice {
     public Sprite normalCursor;
     public Sprite hitCursor;
 
+    GameObject head;
+
     private void Start()
     {
         if (camera == null) camera = GetComponentInChildren<Camera>();
         camera.enabled = false;
         ui.SetActive(false);
         isActive = false;
+        head = graphics.transform.GetChild(0).gameObject;
         playerCam = Camera.main;
     }
 
@@ -74,6 +77,7 @@ public class CameraDevice : HackableDevice {
         angleY = Mathf.Clamp(angleY + dy, minAY, maxAY);
             
         camera.transform.localRotation = Quaternion.Euler(-angleY, angleX + 180, 0);
+        head.transform.localRotation = Quaternion.Euler(angleY, 0, angleX);
         Ray ray;
         RaycastHit h;
         var device = Player.GetDeviceUnderCursor(camera, hackableLayer, out ray, out h);
