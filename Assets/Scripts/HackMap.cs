@@ -32,6 +32,16 @@ public class Hackmap : MonoBehaviour {
     /// </summary>
     public ConnectionMode mode;
 
+    /// <summary>
+    /// Normal sprite for the catagory buttons
+    /// </summary>
+    private Sprite normalSprite;
+
+    /// <summary>
+    /// Selected sprit for the catagory buttons
+    /// </summary>
+    public Sprite selectedSprite;
+
     private void Awake()
     {
         //Defines the dictionary which maps from mode to button
@@ -39,11 +49,14 @@ public class Hackmap : MonoBehaviour {
             { ConnectionMode.Internet, InternetButton.gameObject },
             { ConnectionMode.Power, PowerButton.gameObject }
         };
+
+        normalSprite = InternetButton.GetComponent<Image>().sprite;
     }
 
     private void Start()
     {
         UnlockMode(ConnectionMode.Internet); //Unlock a mode
+        SetCurrentMode("Internet");
     }
 
     /// <summary>
@@ -69,6 +82,10 @@ public class Hackmap : MonoBehaviour {
     /// <param name="mode">The mode to set</param>
     public void SetCurrentMode (string mode)
     {
+        modeToButton[this.mode].GetComponent<Image>().sprite = normalSprite;
+
         this.mode = (ConnectionMode) Enum.Parse(typeof(ConnectionMode), mode);
+
+        modeToButton[this.mode].GetComponent<Image>().sprite = selectedSprite;
     }
 }
