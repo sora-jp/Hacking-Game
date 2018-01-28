@@ -26,13 +26,19 @@ public class Player : MonoBehaviour {
 		if (device != null)
 		{
 			// Hit a device
-			Debug.Log("YEEEEEEEEEEEEEEEEEE");
-            cursor.sprite = hitCursor;
 
-			if (Input.GetMouseButtonDown(0) && device is IHackable)
+			if (device is IHackable)
 			{
-				// Hack the device we hit
-				(device as IHackable).Hack(this);
+                if ((device as IHackable).CanBeHacked(false))
+                {
+                    cursor.sprite = hitCursor;
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        // Hack the device we hit
+                        (device as IHackable).Hack(this);
+                    }
+                }
 			}
 		}
     }

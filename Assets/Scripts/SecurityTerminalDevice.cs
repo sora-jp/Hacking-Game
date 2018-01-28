@@ -16,6 +16,7 @@ public class SecurityTerminalDevice : HackableDevice {
     public int crI;
 
     public float colorStrength;
+    bool wasHacked;
 
     public override void Hack(Player player)
     {
@@ -26,8 +27,14 @@ public class SecurityTerminalDevice : HackableDevice {
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        wasHacked = true;
 
         //TODO: Start minigame here
+    }
+
+    public override bool CanBeHacked(bool camera)
+    {
+        return !camera && !wasHacked;
     }
 
     public void HackCompleted()
@@ -46,6 +53,8 @@ public class SecurityTerminalDevice : HackableDevice {
             r.materials[crI].SetColor("_EmissionColor", new Color(0, colorStrength, 0));
         }
     }
+
+
 
     // Use this for initialization
     void Start () {

@@ -23,6 +23,7 @@ namespace Hacking
     public interface IHackable : IDevice
     {
         void Hack(Player player);
+        bool CanBeHacked(bool camera);
     }
 
     /// <summary>
@@ -92,6 +93,10 @@ namespace Hacking
         /// Hacks the device
         /// </summary>
         public abstract void Hack(Player player);
+        public virtual bool CanBeHacked(bool camera)
+        {
+            return true;
+        }
     }
 
     /// <summary>

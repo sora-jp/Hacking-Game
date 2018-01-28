@@ -84,18 +84,24 @@ public class CameraDevice : HackableDevice {
         if (device != null) 
         {
             Debug.Log("Hit Device!");
-            cursor.sprite = hitCursor;
             Debug.DrawLine(ray.origin, h.point, Color.green);
-            if (Input.GetMouseButtonDown(0) && device is IHackable) 
+            if (device is IHackable) 
             {
-                if (device is CameraDevice)
+                if ((device as IHackable).CanBeHacked(true))
                 {
-                    isActive = false;
-                    camera.enabled = false;
-                    graphics.SetActive(true);
-                    ui.SetActive(false);
+                    cursor.sprite = hitCursor;
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        if (device is CameraDevice)
+                        {
+                            isActive = false;
+                            camera.enabled = false;
+                            graphics.SetActive(true);
+                            ui.SetActive(false);
+                        }
+                        (device as IHackable).Hack(null);
+                    }
                 }
-                (device as IHackable).Hack(null);
             }
         }
     }
