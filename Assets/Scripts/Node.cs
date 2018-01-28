@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class Node : MonoBehaviour {
 
     public Dictionary<ConnectionMode, LinkedList> connections;
@@ -13,6 +12,8 @@ public class Node : MonoBehaviour {
     public Node[] powerChilds;
     public Node powerParent;
 
+    public int nodeID;
+
     /// <summary>
     /// Theese nodes are somehow contained in the nodes parents/children relations
     /// </summary>
@@ -21,9 +22,13 @@ public class Node : MonoBehaviour {
 
     private void Awake()
     {
-        if (transform.parent.GetComponent<Node>() != null)
+        if (transform.parent.parent.GetComponent<Node>() != null)
         {
-            internetParent = transform.parent.GetComponent<Node>();
+            internetParent = transform.parent.parent.GetComponent<Node>();
+            (transform as RectTransform).pivot = new Vector2(1, 0);
+        } else
+        {
+            (transform as RectTransform).pivot = new Vector2(1, 1);
         }
 
         foreach(Node n in transform.Find("Children").GetComponentsInChildren<Node>())

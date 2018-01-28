@@ -24,11 +24,11 @@ public class FitTreeSize : MonoBehaviour {
     {
         Debug.Log("Fit size");
 
-        float width = GetRightmostNodeInTree(GetRightmostNode(new List<Node>(GetComponentsInChildren<Node>()))).transform.position.x;
-        float height = GetLowestNodeInTrees(new List<Node>(GetComponentsInChildren<Node>())).transform.position.y;
-
-        (transform as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
-        (transform as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+        //float width = GetRightmostNodeInTree(GetRightmostNode(new List<Node>(GetComponentsInChildren<Node>()))).transform.position.x;
+        //float height = GetBiggestTreeHeight(new List<Node>(GetComponentsInChildren<Node>()));
+        GetRightmostNodeInTree(GetRightmostNode(new List<Node>(GetComponentsInChildren<Node>())));
+        //(transform as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
+        //(transform as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
     }
 
     /// <summary>
@@ -38,47 +38,36 @@ public class FitTreeSize : MonoBehaviour {
     /// <returns></returns>
     private Node GetRightmostNode (List<Node> nodes)
     {
-        Node rightest = nodes[0];
-
-        foreach(Node node in nodes)
+        
+        if (nodes.Count > 1)
         {
-            if (node == rightest)
+            Node rightest = null;
+
+            foreach (Node node in nodes)
             {
-                continue;
+                if (node == nodes[0])
+                {
+                    rightest = nodes[0];
+                    continue;
+                }
+
+                if (node.gameObject.transform.position.x > rightest.transform.position.x)
+                {
+                    rightest = node;
+                }
             }
 
-            if (node.gameObject.transform.position.x > rightest.transform.position.x)
+            return rightest;
+        } else
+        {
+            if (nodes.Count==1)
             {
-                rightest = node;
+                return nodes[0];
+            } else
+            {
+                return null;
             }
         }
-
-        return rightest;
-    }
-
-    /// <summary>
-    /// Gets the node which is most to the left from an array of nodes
-    /// </summary>
-    /// <param name="nodes">The nodes to select from</param>
-    /// <returns></returns>
-    private Node GetLeftmostNode(List<Node> nodes)
-    {
-        Node leftest = nodes[0];
-
-        foreach (Node node in nodes)
-        {
-            if (node == leftest)
-            {
-                continue;
-            }
-
-            if (node.gameObject.transform.position.x < leftest.transform.position.x)
-            {
-                leftest = node;
-            }
-        }
-
-        return leftest;
     }
 
     /// <summary>
@@ -92,90 +81,45 @@ public class FitTreeSize : MonoBehaviour {
 
         while (currentNode.internetChildren.Count != 0)
         {
+            Debug.Log("Loooping");
             currentNode = GetRightmostNode(node.internetChildren);
         }
 
         return currentNode;
     }
 
-    private Node GetLeftmostNodeInTree(Node node)
+    private float GetBiggestTreeHeight(List<Node> nodes)
     {
-        Node currentNode = node;
+        List<float> heights = new List<float>();
 
-        while (node.internetChildren.Count != 0)
+        foreach (Node node in nodes)
         {
-            currentNode = GetLeftmostNode(node.internetChildren);
+            heights.Add(CalculateTreeHeight(node));
         }
-
-        return currentNode;
+        return GetBiggestValue(heights);
     }
 
-    private Node GetLowestNodeInTree(Node startNode)
+    private float CalculateTreeHeight(Node node)
     {
-        List<Node> checkedNodes = new List<Node>();
-        Node currentNode = startNode;
-        Node lowestNode = startNode;
+        List<float> heights = new List<float>();
 
-        while (ContainsUncheckedChildren(currentNode, checkedNodes))
+        if (node.internetChildren.Count > 0)
         {
-
-            while (currentNode.internetChildren.Count != 0)
+            foreach (Node n in node.internetChildren)
             {
-                if (!checkedNodes.Contains(currentNode))
-                {
-                    checkedNodes.Add(currentNode);
-                }
-
-                foreach (Node node in currentNode.internetChildren)
-                {
-                    if (!checkedNodes.Contains(node))
-                    {
-                        currentNode = node;
-                        break;
-                    }
-                }
+                Debug.Log(n.nodeID);
+                heights.Add(CalculateTreeHeight(n));
             }
-
-            checkedNodes.Add(currentNode);
-
-            if (currentNode.transform.position.y < lowestNode.transform.position.y)
-            {
-                lowestNode = currentNode;
-            }
-
-            while (!ContainsUncheckedChildren(currentNode, checkedNodes) && currentNode.internetParent != null)
-            {
-                currentNode = currentNode.internetParent;
-            }
+            return GetBiggestValue(heights) + Mathf.Abs((node.transform as RectTransform).anchoredPosition.y);
+        } else
+        {
+            return Mathf.Abs((node.transform as RectTransform).anchoredPosition.y);          
         }
-
-        return lowestNode;
     }
 
-    private bool ContainsUncheckedChildren(Node node, List<Node> checkedNodes)
+    private float GetBiggestValue(List<float> values)
     {
-        foreach(Node n in node.internetChildren)
-        {
-            if (!checkedNodes.Contains(n))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private Node GetLowestNodeInTrees(List<Node> trees)
-    {
-        Node currentLowest = trees[0];
-        foreach (Node node in trees)
-        {
-            if (GetLowestNodeInTree(node).transform.position.y < currentLowest.transform.position.y)
-            {
-                currentLowest = GetLowestNodeInTree(node);
-            }
-        }
-
-        return currentLowest;
+        values.Sort();
+        return values[values.Count - 1];
     }
 }
