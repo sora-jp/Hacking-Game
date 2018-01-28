@@ -194,6 +194,7 @@ namespace Hacking
         /// <returns></returns>
         public Data GetData(DataType type)
         {
+            if (!data.ContainsKey(type)) return null;
             return data[type];
         }
 

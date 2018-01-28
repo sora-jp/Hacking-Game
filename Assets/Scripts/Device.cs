@@ -48,7 +48,10 @@ namespace Hacking
         {
             fileNames = FileDatabase.AddFiles(assets, this); //Add the files to the database
             fileData = FileHelper.ParseFiles(fileNames, this); //Parse he files and save them in the filedata
-            foreach (string connection in ((ConnectionsData)fileData.GetData(DataType.Connections)).connections)
+            var data = ((ConnectionsData)fileData.GetData(DataType.Connections));
+            if (data == null) return;
+
+            foreach (string connection in data.connections)
             {
                 print(connection);
             }
