@@ -25,15 +25,19 @@ public class Node : MonoBehaviour {
         if (transform.parent.parent.GetComponent<Node>() != null)
         {
             internetParent = transform.parent.parent.GetComponent<Node>();
-            (transform as RectTransform).pivot = new Vector2(1, 0);
-        } else
-        {
-            (transform as RectTransform).pivot = new Vector2(1, 1);
-        }
+        } 
 
         foreach(Node n in transform.Find("Children").GetComponentsInChildren<Node>())
         {
             internetChildren.Add(n);
+        }
+
+        if (internetChildren.Count == 0)
+        {
+            (transform as RectTransform).pivot = new Vector2(1, -1);
+        } else
+        {
+            (transform as RectTransform).pivot = new Vector2(1, 1);
         }
     }
 

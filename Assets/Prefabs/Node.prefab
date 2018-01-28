@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224988001778015842}
   - component: {fileID: 114033141035476832}
+  - component: {fileID: 114092513455962656}
   m_Layer: 5
   m_Name: Children
   m_TagString: Untagged
@@ -80,7 +81,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: -150
   m_ChildAlignment: 7
-  m_Spacing: 0
+  m_Spacing: 30
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -98,8 +99,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerChilds: []
   powerParent: {fileID: 0}
+  nodeID: 0
   internetChildren: []
   internetParent: {fileID: 0}
+--- !u!114 &114092513455962656
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1524568265083306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 1
+  m_VerticalFit: 0
 --- !u!114 &114359061015416380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -258,8 +273,8 @@ RectTransform:
   m_Father: {fileID: 224192287925535596}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.000015258789, y: 0.000030517578}
-  m_SizeDelta: {x: 80, y: 82}
-  m_Pivot: {x: -0.00000014901161, y: 1.0000001}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1.4999847, y: 0.000030517578}
+  m_SizeDelta: {x: 0, y: 82}
+  m_Pivot: {x: 0.5, y: 0.50000006}
