@@ -16,10 +16,11 @@ public class ASTest : MonoBehaviour
         for (int i = 0; i < samples.Length; i++)
         {
             Vector2 circle = new Vector2(Mathf.Sin(360 * Mathf.Deg2Rad * ((float)(i-1) / samples.Length)), Mathf.Cos(360 * Mathf.Deg2Rad * ((float)(i-1) / samples.Length)));
+            Vector2 circle2 = new Vector2(Mathf.Sin(360 * Mathf.Deg2Rad * ((float)(i) / samples.Length)), Mathf.Cos(360 * Mathf.Deg2Rad * ((float)(i) / samples.Length)));
 
             float sample = samples[i];
-            Debug.Log(i + " : " + sample);
-            Debug.DrawLine(circle * radius + (Vector2)transform.position, circle * radius + (circle * sample * strength * i * 0.1f) + (Vector2)transform.position, Color.red);
+            //Debug.Log(i + " : " + sample);
+            Debug.DrawLine(circle * radius + (circle * sample * strength) + (Vector2)transform.position, circle2 * radius + (circle2 * samples[(i+1)%samples.Length] * strength) + (Vector2)transform.position, Color.red);
         }
     }
 
