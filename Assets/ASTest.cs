@@ -28,7 +28,7 @@ public class ASTest : MonoBehaviour
     {
         float[] a = new float[512];
 
-        GetComponent<AudioSource>().GetSpectrumData(a, 0, FFTWindow.Rectangular);
+        GetComponent<AudioSource>().GetSpectrumData(a, 0, FFTWindow.BlackmanHarris);
 
         for (int i = 9; i < a.Length - 1; i += 8)
         {
