@@ -52,6 +52,7 @@ public class CameraDevice : HackableDevice {
 
     void Update()
     {
+        if (FindObjectOfType<MenuManager>().MenuOpen) return;
         if (!isActive) return;
         cursor.sprite = normalCursor;
 

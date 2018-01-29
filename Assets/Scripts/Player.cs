@@ -19,27 +19,29 @@ public class Player : MonoBehaviour {
 
     void Update ()
     {
+        if (FindObjectOfType<MenuManager>().MenuOpen) return;
+
         cursor.sprite = normalCursor;
 
         if (!doUpdate) return;
-		var device = GetDeviceUnderCursor(Camera.main, hackableLayer);
-		if (device != null)
-		{
-			// Hit a device
-			Debug.Log("YEEEEEEEEEEEEEEEEEE");
+        var device = GetDeviceUnderCursor(Camera.main, hackableLayer);
+        if (device != null)
+        {
+            // Hit a device
+            Debug.Log("YEEEEEEEEEEEEEEEEEE");
             cursor.sprite = hitCursor;
 
-			if (Input.GetMouseButtonDown(0) && device is IHackable)
-			{
-				// Hack the device we hit
-				(device as IHackable).Hack(this);
-			}
-		}
+            if (Input.GetMouseButtonDown(0) && device is IHackable)
+            {
+                // Hack the device we hit
+                (device as IHackable).Hack(this);
+            }
+        }
     }
 	
     public static IDevice GetDeviceUnderCursor(Camera c, LayerMask layer)
     {
-	    // Get a Ray from the center of the screen, so we can check what is under the cursor
+        // Get a Ray from the center of the screen, so we can check what is under the cursor
         var ray = c.ViewportPointToRay(Vector3.one * 0.5f);
         RaycastHit hit;
         ray.origin += ray.direction * 0.5f;
