@@ -34,14 +34,6 @@ public class Node : MonoBehaviour {
             internetChildren.Add(n);
         }
 
-        if (internetChildren.Count == 0)
-        {
-            (transform as RectTransform).pivot = new Vector2(2, -1);
-        } else
-        {
-            (transform as RectTransform).pivot = new Vector2(0, 1);
-        }
-
         lineRenderer = GetComponent<LineRenderer>();
     }
 
