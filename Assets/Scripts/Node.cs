@@ -12,6 +12,9 @@ public class Node : MonoBehaviour {
     public Node[] powerChilds;
     public Node powerParent;
 
+    public Vector3 ChildLineAdjustment;
+    public Vector3 ParentLineAdjustment;
+
     public string NodeID;
 
     /// <summary>
@@ -34,13 +37,20 @@ public class Node : MonoBehaviour {
             internetChildren.Add(n);
         }
 
+        if (internetChildren.Count != 0)
+        {
+            GetComponent<RectTransform>().pivot = new Vector2(1, 1);
+        }
+
         lineRenderer = GetComponent<LineRenderer>();
+
+        ChildLineAdjustment = new Vector3(-GetComponent<RectTransform>().rect.width/2, GetComponent<RectTransform>().rect.height);
+        ParentLineAdjustment = new Vector3(transform.Find("Children").GetComponent<RectTransform>().rect.width / 2, -transform.Find("Children").GetComponent<RectTransform>().rect.height);
     }
 
     private void Start()
     {
         DrawLinesToChildren();
-        Debug.Log("Drawn lines");
     }
 
     public void MakeCurrentNode()
@@ -52,13 +62,16 @@ public class Node : MonoBehaviour {
     {
         foreach(Node node in internetChildren)
         {
-            DrawLineToChild(node);
+            DrawLineToParent(node);
         }
     }
 
-    public void DrawLineToChild(Node node)
+    public void DrawLineToParent(Node child)
     {
-        node.lineRenderer.SetPositions(LineHelper.GetEasedLine(transform.position, node.transform.position, 10, 1));
+        RectTransform Childrt = child.GetComponent<RectTransform>();
+        Vector3[] positions = LineHelper.GetEasedLine(new Vector3(0 , 0, -50)+ChildLineAdjustment, new Vector3(-Childrt.anchoredPosition.x, -Childrt.anchoredPosition.y, -50)+ParentLineAdjustment, 50, 3);
+        child.lineRenderer.positionCount = positions.Length;
+        child.lineRenderer.SetPositions(positions);
     }
 }
 

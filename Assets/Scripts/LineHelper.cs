@@ -14,7 +14,7 @@ public static class LineHelper
     /// <param name="easePow">How much to ease the line. 0 = not eased</param>
     /// <param name="down">True if the line will be used downwards, else false. Defaults to false</param>
     /// <returns>An array containing all the points in the line</returns>
-    public static Vector3[] GetEasedLine(Vector2 start, Vector2 end, int iterations, float easePow, bool down = true)
+    public static Vector3[] GetEasedLine(Vector3 start, Vector3 end, int iterations, float easePow, bool down = true)
     {
         List<Vector3> output = new List<Vector3>();
 
@@ -23,7 +23,8 @@ public static class LineHelper
             float ix = (float)i / (iterations-1);
             float x = Lerp(start.x, end.x, down ? Ease(ix, easePow + 1) : ix); // Position on x axis
             float y = Lerp(start.y, end.y, !down ? Ease(ix, easePow + 1) : ix); // Position on y axis
-            output.Add(new Vector3(x, y));
+            float z = Lerp(start.z, end.z, 0.5f);
+            output.Add(new Vector3(x, y, z));
         }
 
         return output.ToArray();

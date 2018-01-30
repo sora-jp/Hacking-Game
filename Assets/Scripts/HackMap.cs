@@ -62,6 +62,7 @@ public class Hackmap : MonoBehaviour {
     {
         UnlockMode(ConnectionMode.Internet); //Unlock a mode
         SetCurrentMode("Internet");
+        FindObjectOfType<FitTreeSize>().FitSize();
     }
 
     /// <summary>
@@ -101,5 +102,14 @@ public class Hackmap : MonoBehaviour {
     public void SetCurrentNode (Node node)
     {
         currentNode = node;
+    }
+
+    /// <summary>
+    /// Fix me
+    /// </summary>
+    /// <param name="node">Not proper input, FIX ME</param>
+    void AddNode(Node node) //FIX ME
+    {
+        FindObjectOfType<FitTreeSize>().FitSize();
     }
 }

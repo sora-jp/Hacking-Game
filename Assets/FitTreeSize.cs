@@ -18,6 +18,10 @@ public class FitTreeSize : MonoBehaviour
         FitSize();
     }
 
+    private void Start()
+    {
+        FitSize();
+    }
 
     /// <summary>
     /// Fits the size of the window the the space needed
@@ -27,16 +31,39 @@ public class FitTreeSize : MonoBehaviour
         List<Node> nodes = new List<Node>(GetComponentsInChildren<Node>());
 
         nodes.Sort(new CompareByX());
-        float width = Mathf.Abs(transform.position.x - nodes[0].transform.position.x);
-        Debug.Log(nodes[0].NodeID);
+        float width = Mathf.Abs(GetWidthFromRoot(nodes[0]));
 
         nodes.Sort(new CompareByY());
-        float height = Mathf.Abs(transform.position.y - nodes[0].transform.position.y);
+        float height = Mathf.Abs(GetHeightFromRoot(nodes[0]));
 
         (transform as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
         (transform as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
     }
-}
+
+    private float GetWidthFromRoot(Node node)
+    {
+        Node currentNode = node;
+        float width = 0;
+        while (currentNode.internetParent != null)
+        {
+            width += currentNode.GetComponent<RectTransform>().anchoredPosition.x;
+            currentNode = currentNode.internetParent;
+        }
+        return width +  currentNode.GetComponent<RectTransform>().anchoredPosition.x;
+    }
+
+    private float GetHeightFromRoot(Node node)
+    {
+        Node currentNode = node;
+        float height = 0;
+        while (currentNode.internetParent != null)
+        {
+            height += currentNode.GetComponent<RectTransform>().anchoredPosition.y;
+            currentNode = currentNode.internetParent;
+        }
+        return height + currentNode.GetComponent<RectTransform>().anchoredPosition.y;
+    }
+} 
 
 class CompareByX : IComparer<Node>
 {
