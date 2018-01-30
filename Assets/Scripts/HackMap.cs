@@ -45,7 +45,7 @@ public class Hackmap : MonoBehaviour {
     /// <summary>
     /// The currently viewed node
     /// </summary>
-    private Node currentNode;
+    private DefaultNode currentNode;
 
     private void Awake()
     {
@@ -99,7 +99,7 @@ public class Hackmap : MonoBehaviour {
     /// Set the currently viewed node
     /// </summary>
     /// <param name="node">The node to view</param>
-    public void SetCurrentNode (Node node)
+    public void SetCurrentNode (DefaultNode node)
     {
         currentNode = node;
     }
@@ -112,4 +112,26 @@ public class Hackmap : MonoBehaviour {
     {
         FindObjectOfType<FitTreeSize>().FitSize();
     }
+}
+
+public class NodeMap<T> where T:Node
+{
+    public Node head;
+
+    public IEnumerator UpFrom<TNode>(Node child) where TNode:Node
+    {
+        TNode current;
+        yield return child;
+        while ((current = child.GetParent<TNode>()) != null)
+        {
+            yield return current;
+        }
+    }
+}
+
+
+public abstract class Node : MonoBehaviour
+{
+    public abstract T GetParent<T>() where T:Node;
+    public abstract T  GetChild<T>() where T:Node;
 }

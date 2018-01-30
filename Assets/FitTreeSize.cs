@@ -28,7 +28,7 @@ public class FitTreeSize : MonoBehaviour
     /// </summary>
     public void FitSize()
     {
-        List<Node> nodes = new List<Node>(GetComponentsInChildren<Node>());
+        List<DefaultNode> nodes = new List<DefaultNode>(GetComponentsInChildren<DefaultNode>());
 
         nodes.Sort(new CompareByX());
         float width = Mathf.Abs(GetWidthFromRoot(nodes[0]));
@@ -40,9 +40,9 @@ public class FitTreeSize : MonoBehaviour
         (transform as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
     }
 
-    private float GetWidthFromRoot(Node node)
+    private float GetWidthFromRoot(DefaultNode node)
     {
-        Node currentNode = node;
+        DefaultNode currentNode = node;
         float width = 0;
         while (currentNode.internetParent != null)
         {
@@ -52,9 +52,9 @@ public class FitTreeSize : MonoBehaviour
         return width +  currentNode.GetComponent<RectTransform>().anchoredPosition.x;
     }
 
-    private float GetHeightFromRoot(Node node)
+    private float GetHeightFromRoot(DefaultNode node)
     {
-        Node currentNode = node;
+        DefaultNode currentNode = node;
         float height = 0;
         while (currentNode.internetParent != null)
         {
@@ -65,9 +65,9 @@ public class FitTreeSize : MonoBehaviour
     }
 } 
 
-class CompareByX : IComparer<Node>
+class CompareByX : IComparer<DefaultNode>
 {
-    public int Compare(Node n1, Node n2)
+    public int Compare(DefaultNode n1, DefaultNode n2)
     {
         if (n1.transform.position. x < n2.transform.position.x)
         {
@@ -82,9 +82,9 @@ class CompareByX : IComparer<Node>
     }
 }
 
-class CompareByY : IComparer<Node>
+class CompareByY : IComparer<DefaultNode>
 {
-    public int Compare(Node n1, Node n2)
+    public int Compare(DefaultNode n1, DefaultNode n2)
     {
         if (n1.transform.position.y > n2.transform.position.y)
         {

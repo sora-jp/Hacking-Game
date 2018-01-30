@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour {
+public class DefaultNode : Node {
 
     public Dictionary<ConnectionMode, LinkedList> connections;
 
     /// <summary>
     /// All variables below are set in the inspector
     /// </summary>
-    public Node[] powerChilds;
-    public Node powerParent;
+    public DefaultNode[] powerChilds;
+    public DefaultNode powerParent;
 
     public Vector3 ChildLineAdjustment;
     public Vector3 ParentLineAdjustment;
@@ -20,19 +20,19 @@ public class Node : MonoBehaviour {
     /// <summary>
     /// Theese nodes are somehow contained in the nodes parents/children relations
     /// </summary>
-    public List<Node> internetChildren = new List<Node>();
-    public Node internetParent;
+    public List<DefaultNode> internetChildren = new List<DefaultNode>();
+    public DefaultNode internetParent;
 
     public LineRenderer lineRenderer;
 
     private void Awake()
     {
-        if (transform.parent.parent.GetComponent<Node>() != null)
+        if (transform.parent.parent.GetComponent<DefaultNode>() != null)
         {
-            internetParent = transform.parent.parent.GetComponent<Node>();
+            internetParent = transform.parent.parent.GetComponent<DefaultNode>();
         } 
 
-        foreach(Node n in transform.Find("Children").GetComponentsInChildren<Node>())
+        foreach(DefaultNode n in transform.Find("Children").GetComponentsInChildren<DefaultNode>())
         {
             internetChildren.Add(n);
         }
@@ -60,13 +60,13 @@ public class Node : MonoBehaviour {
 
     public void DrawLinesToChildren()
     {
-        foreach(Node node in internetChildren)
+        foreach(DefaultNode node in internetChildren)
         {
             DrawLineToParent(node);
         }
     }
 
-    public void DrawLineToParent(Node child)
+    public void DrawLineToParent(DefaultNode child)
     {
         RectTransform Childrt = child.GetComponent<RectTransform>();
         Vector3[] positions = LineHelper.GetEasedLine(new Vector3(0 , 0, -50)+ChildLineAdjustment, new Vector3(-Childrt.anchoredPosition.x, -Childrt.anchoredPosition.y, -50)+ParentLineAdjustment, 50, 3);
