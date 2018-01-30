@@ -12,6 +12,9 @@ public class DefaultNode : Node {
     public DefaultNode[] powerChilds;
     public DefaultNode powerParent;
 
+    public DefaultNode parent;
+    public DefaultNode[] children;
+
     public Vector3 ChildLineAdjustment;
     public Vector3 ParentLineAdjustment;
 
@@ -24,6 +27,15 @@ public class DefaultNode : Node {
     public DefaultNode internetParent;
 
     public LineRenderer lineRenderer;
+
+    public override T GetParent<T>()
+    {
+        return parent as T;
+    }
+    public override T[] GetChild<T>()
+    {
+        return children as T[];
+    }
 
     private void Awake()
     {
