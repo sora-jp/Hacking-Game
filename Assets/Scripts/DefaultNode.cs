@@ -55,14 +55,27 @@ public class DefaultNode : Node {
         }
 
         lineRenderer = GetComponent<LineRenderer>();
+    }
 
-        ChildLineAdjustment = new Vector3(-GetComponent<RectTransform>().rect.width/2, GetComponent<RectTransform>().rect.height);
+    public void Setup() 
+    {
+        ChildLineAdjustment = new Vector3(-GetComponent<RectTransform>().rect.width / 2, GetComponent<RectTransform>().rect.height);
         ParentLineAdjustment = new Vector3(transform.Find("Children").GetComponent<RectTransform>().rect.width / 2, -transform.Find("Children").GetComponent<RectTransform>().rect.height);
+
+        DrawLinesToParent();
+
+        foreach(DefaultNode node in internetChildren)
+        {
+            node.Setup();
+        }
     }
 
     private void Start()
     {
-        DrawLinesToChildren();
+        if (internetParent == null)
+        {
+            Setup();
+        }
     }
 
     public void MakeCurrentNode()
@@ -70,7 +83,7 @@ public class DefaultNode : Node {
         FindObjectOfType<Hackmap>().SetCurrentNode(this);
     }
 
-    public void DrawLinesToChildren()
+    public void DrawLinesToParent ()
     {
         foreach(DefaultNode node in internetChildren)
         {
@@ -81,7 +94,7 @@ public class DefaultNode : Node {
     public void DrawLineToParent(DefaultNode child)
     {
         RectTransform Childrt = child.GetComponent<RectTransform>();
-        Vector3[] positions = LineHelper.GetEasedLine(new Vector3(0 , 0, -50)+ChildLineAdjustment, new Vector3(-Childrt.anchoredPosition.x, -Childrt.anchoredPosition.y, -50)+ParentLineAdjustment, 50, 3);
+        Vector3[] positions = LineHelper.GetEasedLine(new Vector3(0 , 0, -50)/*+ChildLineAdjustment*/, new Vector3(-Childrt.anchoredPosition.x, -Childrt.anchoredPosition.y, -50)/*+ParentLineAdjustment*/, 50, 3);
         child.lineRenderer.positionCount = positions.Length;
         child.lineRenderer.SetPositions(positions);
     }
