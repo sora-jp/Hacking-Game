@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour {
+public class DefaultNode : MonoBehaviour {
 
     public Dictionary<ConnectionMode, LinkedList> connections;
 

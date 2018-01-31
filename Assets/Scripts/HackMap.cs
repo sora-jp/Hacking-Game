@@ -14,7 +14,7 @@ public class Hackmap : MonoBehaviour {
 
     public ConnectionMode mode;
 
-    public LinkedList powerStartingPoints, internetStartingPoints;
+    public LinkedList<Hackmap> powerStartingPoints, internetStartingPoints;
 
     public void Start()
     {
