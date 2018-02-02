@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum ConnectionType {
+    Default, Power
+}
+
 /// <summary>
 /// Node map, here is ur LinkedList wahlnöt
 /// </summary>
-/// <typeparam name="T"></typeparam>
-public class NodeMap<T> where T : Node
+public class NodeMap
 {
-    public T head;
+    public ConnectionType type;
 
-    public NodeMap(T head)
+    public Node head;
+
+    public NodeMap(Node head, ConnectionType type)
     {
         if (head == null) throw new ArgumentNullException("head is null");
         this.head = head;
+        this.type = type;
     }
 
 
@@ -26,13 +32,37 @@ public class NodeMap<T> where T : Node
     /// <typeparam name="TNode">Type of the node</typeparam>
     /// <param name="child">The node to look from</param>
     /// <returns></returns>
-    public IEnumerator<TNode> UpFrom<TNode>(Node child) where TNode : Node
+    public IEnumerator<Node> UpFrom(Node child)
     {
-        TNode current;
-        yield return child as TNode;
-        while ((current = child.GetParent<TNode>()) != null)
+        Node current = child;
+        yield return child;
+        while (current.GetParent(type) != null)
         {
             yield return current;
+            current = current.GetParent(type);
+        }
+    }
+}
+
+/// <summary>
+/// This class basically stores parent/child information
+/// </summary>
+public class NodeConnectionData {
+    public Node parent;
+    public List<Node> children;
+    public NodeMap tree;
+
+    public NodeConnectionData(Node parent = null, List<Node> children = null, NodeMap tree = null)
+    {
+        this.parent = parent;
+        this.tree = tree;
+
+        if (children != null)
+        {
+            this.children = children;
+        } else
+        {
+            this.children = new List<Node>();
         }
     }
 }
@@ -42,6 +72,47 @@ public class NodeMap<T> where T : Node
 /// </summary>
 public abstract class Node : MonoBehaviour
 {
-    public abstract T GetParent<T>() where T : Node;
-    public abstract T[] GetChild<T>() where T : Node;
+    private Dictionary<ConnectionType, NodeConnectionData> data;
+
+    public abstract ConnectionType[] GetConnectionType();
+
+    private void Awake()
+    {
+        data = new Dictionary<ConnectionType, NodeConnectionData>();
+
+        foreach (ConnectionType t in GetConnectionType())
+        {
+            data.Add(t, new NodeConnectionData());
+        }
+    }
+
+    public void Initialize()
+    {
+
+    }
+
+    public Node GetHead(ConnectionType t)
+    {
+        return GetMap(t).head;
+    }
+
+    public IEnumerator<Node> GetNodesUpIn(ConnectionType t)
+    {
+        return GetMap(t).UpFrom(this);
+    }
+
+    public NodeMap GetMap(ConnectionType t)
+    {
+        return data[t].tree;
+    }
+
+    public Node GetParent(ConnectionType t)
+    {
+        return data[t].parent;
+    }
+
+    public List<Node> GetChildren(ConnectionType t)
+    {
+        return data[t].children;
+    }
 }

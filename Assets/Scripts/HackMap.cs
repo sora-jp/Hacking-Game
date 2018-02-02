@@ -4,11 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public enum ConnectionMode
-{
-    Power, Internet
-}
-
 public class Hackmap : MonoBehaviour {
 
     /// <summary>
@@ -20,17 +15,17 @@ public class Hackmap : MonoBehaviour {
     /// <summary>
     /// A dictionary that takes a mode and spits out the button for it
     /// </summary>
-    private Dictionary<ConnectionMode, GameObject> modeToButton;
+    private Dictionary<ConnectionType, GameObject> modeToButton;
 
     /// <summary>
     /// The modes you can currently select
     /// </summary>
-    private List<ConnectionMode> unlockedModes = new List<ConnectionMode>();
+    private List<ConnectionType> unlockedModes = new List<ConnectionType>();
 
     /// <summary>
     /// The current mode of the map
     /// </summary>
-    public ConnectionMode mode;
+    public ConnectionType mode;
 
     /// <summary>
     /// Normal sprite for the catagory buttons
@@ -50,9 +45,9 @@ public class Hackmap : MonoBehaviour {
     private void Awake()
     {
         //Defines the dictionary which maps from mode to button
-        modeToButton = new Dictionary<ConnectionMode, GameObject>() {
-            { ConnectionMode.Internet, InternetButton.gameObject },
-            { ConnectionMode.Power, PowerButton.gameObject }
+        modeToButton = new Dictionary<ConnectionType, GameObject>() {
+            { ConnectionType.Default, InternetButton.gameObject },
+            { ConnectionType.Power, PowerButton.gameObject }
         };
 
         normalSprite = InternetButton.GetComponent<Image>().sprite;
@@ -60,7 +55,7 @@ public class Hackmap : MonoBehaviour {
 
     private void Start()
     {
-        UnlockMode(ConnectionMode.Internet); //Unlock a mode
+        UnlockMode(ConnectionType.Default); //Unlock a mode
         SetCurrentMode("Internet");
         FindObjectOfType<FitTreeSize>().FitSize();
     }
@@ -69,12 +64,12 @@ public class Hackmap : MonoBehaviour {
     /// Unlocks a new mode and also adds those buttons
     /// </summary>
     /// <param name="mode">The mode to unlock</param>
-    public void UnlockMode(ConnectionMode mode)
+    public void UnlockMode(ConnectionType mode)
     {
         unlockedModes.Add(mode); //Add the mode the unlocked modes
 
         //Activate the unlocked mode buttons
-        foreach (ConnectionMode m in unlockedModes)
+        foreach (ConnectionType m in unlockedModes)
         {
             Debug.Log(m.ToString());
             Debug.Log("Key exists: " + modeToButton.ContainsKey(m));
@@ -90,7 +85,7 @@ public class Hackmap : MonoBehaviour {
     {
         modeToButton[this.mode].GetComponent<Image>().sprite = normalSprite;
 
-        this.mode = (ConnectionMode) Enum.Parse(typeof(ConnectionMode), mode);
+        this.mode = (ConnectionType) Enum.Parse(typeof(ConnectionType), mode);
 
         modeToButton[this.mode].GetComponent<Image>().sprite = selectedSprite;
     }

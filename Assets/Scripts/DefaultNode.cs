@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class DefaultNode : Node {
 
-    public Dictionary<ConnectionMode, LinkedList> connections;
-
     /// <summary>
     /// All variables below are set in the inspector
     /// </summary>
@@ -29,15 +27,6 @@ public class DefaultNode : Node {
     public DefaultNode internetParent;
 
     public LineRenderer lineRenderer;
-
-    public override T GetParent<T>()
-    {
-        return parent as T;
-    }
-    public override T[] GetChild<T>()
-    {
-        return children as T[];
-    }
 
     private void Awake()
     {
@@ -110,6 +99,11 @@ public class DefaultNode : Node {
             DrawLinesToParent();
             Debug.Log("Setup");
         }
+    }
+
+    public override ConnectionType[] GetConnectionType()
+    {
+        throw new System.NotImplementedException();
     }
 }
 
