@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Hacking;
+using UnityEngine.Serialization;
 
 public class CameraDevice : HackableDevice {
     public new Camera camera;
@@ -26,7 +27,9 @@ public class CameraDevice : HackableDevice {
 
     public Image cursor;
     public Sprite normalCursor;
-    public Sprite hitCursor;
+    [FormerlySerializedAs("hitCursor")]
+    public Sprite hackCursor;
+    public Sprite noHackCursor;
 
     GameObject head;
 
@@ -48,7 +51,7 @@ public class CameraDevice : HackableDevice {
 
     IEnumerator cHack()
     {
-        yield return null;
+        yield return new WaitForEndOfFrame();
         graphics.SetActive(false);
         ui.SetActive(true);
         playerCam.transform.root.gameObject.SetActive(false);
@@ -89,7 +92,7 @@ public class CameraDevice : HackableDevice {
             {
                 if (Player.CanHackDevice(device, true))
                 {
-                    cursor.sprite = hitCursor;
+                    cursor.sprite = hackCursor;
                     if (Input.GetMouseButtonDown(0))
                     {
                         if (device is CameraDevice)
@@ -101,6 +104,10 @@ public class CameraDevice : HackableDevice {
                         }
                         (device as IHackable).Hack(null);
                     }
+                }
+                else
+                {
+                    cursor.sprite = noHackCursor;
                 }
             }
         }

@@ -687,6 +687,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   assets:
   - {fileID: 4900000, guid: 3c080d648ece33b4d8e5f2709c04ea2b, type: 3}
+  id: cam1
+  parent: terminal1
+  children: []
   camera: {fileID: 20981947063337674}
   ui: {fileID: 1707359741902678}
   graphics: {fileID: 1437953677314872}
@@ -701,7 +704,8 @@ MonoBehaviour:
   maxAY: 75
   cursor: {fileID: 0}
   normalCursor: {fileID: 21300000, guid: 6a298278cbe71b4418eb4f74659ac851, type: 3}
-  hitCursor: {fileID: 21300000, guid: 8ea457c1fecc5e5478876675849faa22, type: 3}
+  hackCursor: {fileID: 21300000, guid: 8ea457c1fecc5e5478876675849faa22, type: 3}
+  noHackCursor: {fileID: 21300000, guid: aff82d36d8fa9c543a5da3c793b1cc37, type: 3}
 --- !u!114 &114532995284706506
 MonoBehaviour:
   m_ObjectHideFlags: 1

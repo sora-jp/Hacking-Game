@@ -1413,12 +1413,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &544991782 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114915652150539340, guid: adff69a08c815a64a950dd5b9837c481,
-    type: 2}
-  m_PrefabInternal: {fileID: 1131923829}
-  m_Script: {fileID: 11500000, guid: 46da9730ad390f145b1afccbcaca2a28, type: 3}
 --- !u!1 &552536955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1983,6 +1977,12 @@ Prefab:
       propertyPath: parent
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114504811692090342, guid: 390dc02e86fe5b546bac48782f40c51d,
+        type: 2}
+      propertyPath: noHackCursor
+      value: 
+      objectReference: {fileID: 21300000, guid: aff82d36d8fa9c543a5da3c793b1cc37,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 390dc02e86fe5b546bac48782f40c51d, type: 2}
   m_IsPrefabParent: 0
@@ -2995,16 +2995,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114915652150539340, guid: adff69a08c815a64a950dd5b9837c481,
-        type: 2}
-      propertyPath: children.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114310681496627544, guid: adff69a08c815a64a950dd5b9837c481,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4227781227343448, guid: adff69a08c815a64a950dd5b9837c481, type: 2}
       propertyPath: m_LocalPosition.x
       value: -9.51
@@ -3051,47 +3041,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4350914854853158, guid: adff69a08c815a64a950dd5b9837c481, type: 2}
       propertyPath: m_LocalRotation.w
-      value: -0.00094583584
-      objectReference: {fileID: 0}
-    - target: {fileID: 114310681496627544, guid: adff69a08c815a64a950dd5b9837c481,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114310681496627544, guid: adff69a08c815a64a950dd5b9837c481,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114310681496627544, guid: adff69a08c815a64a950dd5b9837c481,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 544991782}
-    - target: {fileID: 114310681496627544, guid: adff69a08c815a64a950dd5b9837c481,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: HackCompleted
-      objectReference: {fileID: 0}
-    - target: {fileID: 114310681496627544, guid: adff69a08c815a64a950dd5b9837c481,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915652150539340, guid: adff69a08c815a64a950dd5b9837c481,
-        type: 2}
-      propertyPath: id
-      value: terminal1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915652150539340, guid: adff69a08c815a64a950dd5b9837c481,
-        type: 2}
-      propertyPath: children.Array.data[0]
-      value: cam1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915652150539340, guid: adff69a08c815a64a950dd5b9837c481,
-        type: 2}
-      propertyPath: children.Array.data[1]
-      value: cam2
+      value: -0.0009458358
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: adff69a08c815a64a950dd5b9837c481, type: 2}
@@ -3910,11 +3860,11 @@ RectTransform:
   m_Father: {fileID: 702593428}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.45375, y: 0.41777858}
-  m_AnchorMax: {x: 0.54625005, y: 0.58222145}
+  m_AnchorMin: {x: 0.45, y: 0.4}
+  m_AnchorMax: {x: 0.55, y: 0.55}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.45}
 --- !u!114 &1581766818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4924,16 +4874,6 @@ Prefab:
         type: 2}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114504811692090342, guid: 390dc02e86fe5b546bac48782f40c51d,
-        type: 2}
-      propertyPath: id
-      value: cam1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114504811692090342, guid: 390dc02e86fe5b546bac48782f40c51d,
-        type: 2}
-      propertyPath: parent
-      value: terminal1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 390dc02e86fe5b546bac48782f40c51d, type: 2}

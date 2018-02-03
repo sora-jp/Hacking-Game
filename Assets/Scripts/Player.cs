@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Hacking;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour {
 
@@ -10,7 +11,9 @@ public class Player : MonoBehaviour {
     public bool doUpdate;
     public Image cursor;
     public Sprite normalCursor;
-    public Sprite hitCursor;
+    [FormerlySerializedAs("hitCursor")]
+    public Sprite hackCursor;
+    public Sprite noHackCursor;
 
     private void Awake()
     {
@@ -30,13 +33,17 @@ public class Player : MonoBehaviour {
 			{
                 if (CanHackDevice(device))
                 {
-                    cursor.sprite = hitCursor;
+                    cursor.sprite = hackCursor;
 
                     if (Input.GetMouseButtonDown(0))
                     {
                         // Hack the device we hit
                         (device as IHackable).Hack(this);
                     }
+                }
+                else
+                {
+                    cursor.sprite = noHackCursor;
                 }
 			}
 		}
