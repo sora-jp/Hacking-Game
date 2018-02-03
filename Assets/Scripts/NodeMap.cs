@@ -72,23 +72,23 @@ public class NodeConnectionData {
 /// </summary>
 public abstract class Node : MonoBehaviour
 {
-    private Dictionary<ConnectionType, NodeConnectionData> data;
+    private Dictionary<ConnectionType, NodeConnectionData> connectionsdata;
 
     public abstract ConnectionType[] GetConnectionType();
 
     private void Awake()
     {
-        data = new Dictionary<ConnectionType, NodeConnectionData>();
+        connectionsdata = new Dictionary<ConnectionType, NodeConnectionData>();
 
         foreach (ConnectionType t in GetConnectionType())
         {
-            data.Add(t, new NodeConnectionData());
+            connectionsdata.Add(t, new NodeConnectionData());
         }
     }
 
-    public void Initialize()
+    public void Initialize(ConnectionType t)
     {
-
+        
     }
 
     public Node GetHead(ConnectionType t)
@@ -103,16 +103,24 @@ public abstract class Node : MonoBehaviour
 
     public NodeMap GetMap(ConnectionType t)
     {
-        return data[t].tree;
+        return connectionsdata[t].tree;
     }
 
     public Node GetParent(ConnectionType t)
     {
-        return data[t].parent;
+        return connectionsdata[t].parent;
     }
 
     public List<Node> GetChildren(ConnectionType t)
     {
-        return data[t].children;
+        return connectionsdata[t].children;
+    }
+
+    public IEnumerator<ConnectionType> GetConnectionTypes()
+    {
+        foreach (KeyValuePair<ConnectionType, NodeConnectionData> data in connectionsdata)
+        {
+            yield return data.Key;
+        }
     }
 }

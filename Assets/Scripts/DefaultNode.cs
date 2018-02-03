@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DefaultNode : Node {
 
@@ -13,12 +14,14 @@ public class DefaultNode : Node {
     public DefaultNode parent;
     public DefaultNode[] children;
 
-    public Vector3 ChildLineAdjustment;
     public Vector3 ParentLineAdjustment;
 
     public string NodeID;
 
     public bool setup;
+
+    public float graphicWidth;
+    public float graphicHeight;
 
     /// <summary>
     /// Theese nodes are somehow contained in the nodes parents/children relations
@@ -30,42 +33,28 @@ public class DefaultNode : Node {
 
     private void Awake()
     {
-        if (transform.parent.parent.GetComponent<DefaultNode>() != null)
+        if (transform.parent.GetComponent<DefaultNode>() != null)
         {
-            internetParent = transform.parent.parent.GetComponent<DefaultNode>();
+            internetParent = transform.parent.GetComponent<DefaultNode>();
         } 
 
-        foreach(DefaultNode n in transform.Find("Children").GetComponentsInChildren<DefaultNode>())
+        foreach(DefaultNode n in GetComponentsInChildren<DefaultNode>())
         {
             internetChildren.Add(n);
         }
 
-        if (internetChildren.Count != 0)
-        {
-            GetComponent<RectTransform>().pivot = new Vector2(1, 1);
-        }
+        graphicWidth = GetComponent<LayoutElement>().minWidth;
+        graphicHeight = GetComponent<LayoutElement>().minHeight;
 
         lineRenderer = GetComponent<LineRenderer>();
     }
 
-    public void Setup() 
-    {
-        DrawLinesToParent();
-
-        foreach(DefaultNode node in internetChildren)
-        {
-            node.Setup();
-        }
-    }
-
     private void Start()
     {
-        ChildLineAdjustment = new Vector3(-GetComponent<RectTransform>().rect.width / 2, GetComponent<RectTransform>().rect.height);
-        ParentLineAdjustment = new Vector3(transform.Find("Children").GetComponent<RectTransform>().rect.width / 2, -transform.Find("Children").GetComponent<RectTransform>().rect.height);
+        ParentLineAdjustment = new Vector3((transform.parent as RectTransform).rect.size.x/2, -graphicHeight);
 
-        if (internetParent == null)
-        {
-            Setup();
+        if (internetParent != null) {
+            DrawLinesToParent();
         }
     }
 
@@ -85,7 +74,7 @@ public class DefaultNode : Node {
     public void DrawLineToParent(DefaultNode child)
     {
         RectTransform Childrt = child.GetComponent<RectTransform>();
-        Vector3[] positions = LineHelper.GetEasedLine(new Vector3(0 , 0, -50)+ChildLineAdjustment, new Vector3(-Childrt.anchoredPosition.x, -Childrt.anchoredPosition.y, -50)+ParentLineAdjustment, 50, 3);
+        Vector3[] positions = LineHelper.GetEasedLine(new Vector3(0 , 0, -50), new Vector3(-Childrt.anchoredPosition.x, -Childrt.anchoredPosition.y, 50)+child.ParentLineAdjustment, -50, 3);
         child.lineRenderer.positionCount = positions.Length;
         child.lineRenderer.SetPositions(positions);
         Debug.Log("Thing");
@@ -105,11 +94,4 @@ public class DefaultNode : Node {
     {
         throw new System.NotImplementedException();
     }
-}
-
-/// <summary>
-/// A custom linked list for nodes
-/// </summary>
-public class LinkedList {
-    
 }
