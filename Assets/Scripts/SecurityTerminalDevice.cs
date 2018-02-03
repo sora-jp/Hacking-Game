@@ -20,13 +20,15 @@ public class SecurityTerminalDevice : HackableDevice {
 
     public override void Hack(Player player)
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        Debug.Log("tye");
         this.player = player;
         canvas.SetActive(true);
         player.transform.root.gameObject.SetActive(false);
         camera.SetActive(true);
 
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
         wasHacked = true;
 
         //TODO: Start minigame here
@@ -35,6 +37,11 @@ public class SecurityTerminalDevice : HackableDevice {
     public override bool CanBeHacked(bool camera)
     {
         return !camera && !wasHacked;
+    }
+
+    public override bool HasBeenHacked()
+    {
+        return wasHacked;
     }
 
     public void HackCompleted()

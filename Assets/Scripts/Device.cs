@@ -24,6 +24,7 @@ namespace Hacking
     {
         void Hack(Player player);
         bool CanBeHacked(bool camera);
+        bool HasBeenHacked();
     }
 
     /// <summary>
@@ -45,8 +46,14 @@ namespace Hacking
         public TextAsset[] assets; // The paths to the files. This is edited in the editor
         string[] fileNames; //The names of the files
 
+        public string id;
+        public string parent;
+        public string[] children;
+
         private void Awake()
         {
+            DeviceHelper.RegisterDevice(id, this);
+
             fileNames = FileDatabase.AddFiles(assets, this); //Add the files to the database
             fileData = FileHelper.ParseFiles(fileNames, this); //Parse he files and save them in the filedata
             var data = ((ConnectionsData)fileData.GetData(DataType.Connections));
@@ -97,6 +104,10 @@ namespace Hacking
         {
             return true;
         }
+        public virtual bool HasBeenHacked()
+        {
+            return true;
+        }
     }
 
     /// <summary>
@@ -122,14 +133,28 @@ namespace Hacking
     /// </summary>
     public static class DeviceHelper
     {
-        public static IDevice DeviceFromId(string id)
+        static Dictionary<string, IDevice> m_DeviceFromID;
+        static Dictionary<IDevice, string> m_IDFromDevice;
+
+        public static void RegisterDevice(string id, IDevice device)
         {
-            return null; //FIXME
+            if (m_DeviceFromID == null) m_DeviceFromID = new Dictionary<string, IDevice>();
+            if (m_IDFromDevice == null) m_IDFromDevice = new Dictionary<IDevice, string>();
+
+            m_DeviceFromID.Add(id, device);
+            m_IDFromDevice.Add(device, id);
         }
 
-        public static string IdFromDevice(IDevice device)
+        public static IDevice DeviceFromID(string id)
         {
-            return ""; //FIXME
+            if (m_DeviceFromID == null || !m_DeviceFromID.ContainsKey(id)) return null;
+            return m_DeviceFromID[id];
+        }
+
+        public static string IDFromDevice(IDevice device)
+        {
+            if (m_IDFromDevice == null || !m_IDFromDevice.ContainsKey(device)) return null;
+            return m_IDFromDevice[device];
         }
     }
 }

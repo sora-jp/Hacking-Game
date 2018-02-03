@@ -26,10 +26,9 @@ public class Player : MonoBehaviour {
 		if (device != null)
 		{
 			// Hit a device
-
 			if (device is IHackable)
 			{
-                if ((device as IHackable).CanBeHacked(false))
+                if (CanHackDevice(device))
                 {
                     cursor.sprite = hitCursor;
 
@@ -72,5 +71,20 @@ public class Player : MonoBehaviour {
             return device;
         }
         return null;
+    }
+
+    public static bool CanHackDevice(IDevice device)
+    {
+        IDevice d = device;
+        bool c = (device as IHackable).CanBeHacked(false);
+        int i = 0;
+        while (!string.IsNullOrEmpty((d as Device).parent))
+        {
+            d = DeviceHelper.DeviceFromID((device as Device).parent);
+            i++;
+            if (i > 5) break;
+            c = c && (d is IHackable) ? (d as IHackable).HasBeenHacked() : true;
+        }
+        return c;
     }
 }
