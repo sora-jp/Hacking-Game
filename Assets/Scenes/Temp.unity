@@ -1872,7 +1872,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 385.23993, y: -22.645302}
+  m_AnchoredPosition: {x: 385.23996, y: -22.645302}
   m_SizeDelta: {x: 525.7, y: 32.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &803714898
@@ -2105,8 +2105,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 173958069}
   m_HandleRect: {fileID: 173958068}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.15884905
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2548,7 +2548,11 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1582362472}
   m_Direction: 2
   m_Value: 0
+<<<<<<< HEAD
   m_Size: 0.46470135
+=======
+  m_Size: 0.47654486
+>>>>>>> 9d4ecdacb38b8327a8cf964e4b02a9dbff7aa6f0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3369,7 +3373,11 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
+<<<<<<< HEAD
   m_AnchoredPosition: {x: -0.000050049064, y: 418.173}
+=======
+  m_AnchoredPosition: {x: -0.000047856945, y: 418.17252}
+>>>>>>> 9d4ecdacb38b8327a8cf964e4b02a9dbff7aa6f0
   m_SizeDelta: {x: 0, y: 799.1}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1335190236
@@ -4348,7 +4356,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.00015258789, y: 0.000038146973}
+  m_AnchoredPosition: {x: -0.00015258789, y: -0.000022888184}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.000000015832484, y: 1}
 --- !u!114 &1630444332
@@ -6215,8 +6223,8 @@ GameObject:
   - component: {fileID: 2139171865}
   - component: {fileID: 2139171868}
   - component: {fileID: 2139171867}
-  - component: {fileID: 2139171866}
   - component: {fileID: 2139171869}
+  - component: {fileID: 2139171866}
   m_Layer: 5
   m_Name: Map
   m_TagString: Untagged
@@ -6238,38 +6246,55 @@ RectTransform:
   m_Father: {fileID: 1504354778}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.7813374}
-  m_AnchoredPosition: {x: -132, y: -26}
-  m_SizeDelta: {x: -264, y: -52}
+  m_AnchorMin: {x: 0, y: 0.036662675}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -132, y: -102.5}
+  m_SizeDelta: {x: -264, y: -161}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2139171866
-MonoBehaviour:
+--- !u!212 &2139171866
+SpriteRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2139171864}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 86c2f0863cd7416438651cbfba0a1c35, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 3f8d26beb4906b7448c92828d10d8332, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 6.4, y: 4}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
 --- !u!222 &2139171867
 CanvasRenderer:
   m_ObjectHideFlags: 0

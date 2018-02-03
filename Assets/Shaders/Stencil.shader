@@ -14,6 +14,9 @@
 			Pass Replace
 			ZFail Replace
 		}
+		Cull Off
+		ZWrite Off
+		ZTest Always
 		Blend One One
 		LOD 100
 
