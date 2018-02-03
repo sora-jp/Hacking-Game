@@ -73,10 +73,10 @@ public class Player : MonoBehaviour {
         return null;
     }
 
-    public static bool CanHackDevice(IDevice device)
+    public static bool CanHackDevice(IDevice device, bool camera = false)
     {
         IDevice d = device;
-        bool c = (device as IHackable).CanBeHacked(false);
+        bool c = (device as IHackable).CanBeHacked(camera);
         int i = 0;
         while (!string.IsNullOrEmpty((d as Device).parent))
         {

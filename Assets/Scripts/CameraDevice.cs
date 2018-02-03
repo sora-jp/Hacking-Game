@@ -48,7 +48,7 @@ public class CameraDevice : HackableDevice {
 
     IEnumerator cHack()
     {
-        yield return new WaitForEndOfFrame();
+        yield return null;
         graphics.SetActive(false);
         ui.SetActive(true);
         playerCam.transform.root.gameObject.SetActive(false);
@@ -87,7 +87,7 @@ public class CameraDevice : HackableDevice {
             Debug.DrawLine(ray.origin, h.point, Color.green);
             if (device is IHackable) 
             {
-                if ((device as IHackable).CanBeHacked(true))
+                if (Player.CanHackDevice(device, true))
                 {
                     cursor.sprite = hitCursor;
                     if (Input.GetMouseButtonDown(0))

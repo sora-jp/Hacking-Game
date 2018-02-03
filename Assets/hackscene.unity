@@ -1981,7 +1981,7 @@ Prefab:
     - target: {fileID: 114504811692090342, guid: 390dc02e86fe5b546bac48782f40c51d,
         type: 2}
       propertyPath: parent
-      value: terminal1
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 390dc02e86fe5b546bac48782f40c51d, type: 2}
