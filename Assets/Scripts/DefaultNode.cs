@@ -49,10 +49,11 @@ public class DefaultNode : Node {
         lineRenderer = GetComponent<LineRenderer>();
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         ParentLineAdjustment = new Vector3((transform.parent as RectTransform).rect.size.x/2, -graphicHeight);
 
+        yield return null;
         if (internetParent != null) {
             DrawLinesToParent();
         }
@@ -74,7 +75,7 @@ public class DefaultNode : Node {
     public void DrawLineToParent(DefaultNode child)
     {
         RectTransform Childrt = child.GetComponent<RectTransform>();
-        Vector3[] positions = LineHelper.GetEasedLine(new Vector3(0 , 0, -50), new Vector3(-Childrt.anchoredPosition.x, -Childrt.anchoredPosition.y, 50)+child.ParentLineAdjustment, -50, 3);
+        Vector3[] positions = LineHelper.GetEasedLine(new Vector3(0 , 0, -50), new Vector3(-Childrt.anchoredPosition.x, -Childrt.anchoredPosition.y, -50)+child.ParentLineAdjustment, 50, 3);
         child.lineRenderer.positionCount = positions.Length;
         child.lineRenderer.SetPositions(positions);
         Debug.Log("Thing");
