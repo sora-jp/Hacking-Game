@@ -72,30 +72,52 @@ public class NodeConnectionData {
 /// </summary>
 public abstract class Node : MonoBehaviour
 {
+    /// <summary>
+    /// The dictionary which is responsible for keeping track of all connections
+    /// </summary>
     private Dictionary<ConnectionType, NodeConnectionData> connectionsdata;
 
-    public abstract ConnectionType[] GetConnectionType();
+    /// <summary>
+    /// This is implemented in the parent and it's responsible for telling the node what connections to have
+    /// </summary>
+    /// <returns>What types of connections to have</returns>
+    public abstract ConnectionType[] GetConnectionTypesFromExtendingNode();
 
     private void Awake()
     {
         connectionsdata = new Dictionary<ConnectionType, NodeConnectionData>();
 
-        foreach (ConnectionType t in GetConnectionType())
+        //Add all of the connection types to the dictionary
+        foreach (ConnectionType t in GetConnectionTypesFromExtendingNode())
         {
             connectionsdata.Add(t, new NodeConnectionData());
         }
     }
 
+    /// <summary>
+    /// This function is called from the parent and will make the node know what node tree it is in
+    /// </summary>
+    /// <param name="t"></param>
     public void Initialize(ConnectionType t)
     {
         
     }
 
+    /// <summary>
+    /// Gets the head of the selected NodeMap
+    /// </summary>
+    /// <param name="t">The NodeMap connection type</param>
+    /// <returns>The head of the NodeMap</returns>
     public Node GetHead(ConnectionType t)
     {
         return GetMap(t).head;
     }
 
+    /// <summary>
+    /// Gets all the nodes upwards from this node in the specified tree
+    /// </summary>
+    /// <param name="t">The NodeMap connection type</param>
+    /// <returns></returns>
     public IEnumerator<Node> GetNodesUpIn(ConnectionType t)
     {
         return GetMap(t).UpFrom(this);

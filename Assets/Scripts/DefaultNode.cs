@@ -90,7 +90,7 @@ public class DefaultNode : Node {
         }
     }
 
-    public override ConnectionType[] GetConnectionType()
+    public override ConnectionType[] GetConnectionTypesFromExtendingNode()
     {
         throw new System.NotImplementedException();
     }
