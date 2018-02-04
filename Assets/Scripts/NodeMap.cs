@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum ConnectionType {
     Default, Power
@@ -12,7 +13,12 @@ public enum ConnectionType {
 /// </summary>
 public class NodeMap
 {
-    public ConnectionType type;
+    private ConnectionType type;
+    public ConnectionType Type {
+        get {
+            return type;
+        }
+    }
 
     public Node head;
 
@@ -21,6 +27,11 @@ public class NodeMap
         if (head == null) throw new ArgumentNullException("head is null");
         this.head = head;
         this.type = type;
+
+        foreach (Node n in DownFrom(head))
+        {
+            n.SetNodeMap(this);
+        }
     }
 
 
@@ -42,6 +53,23 @@ public class NodeMap
             current = current.GetParent(type);
         }
     }
+
+    public IEnumerable<Node> DownFrom(Node node)
+    {
+        yield return node; 
+        foreach (Node n in node.GetChildren(Type))
+        {
+            foreach(Node n1 in DownFrom(n))
+            {
+                yield return n1;
+            } 
+        }
+    }
+
+    public void DrawLines(ConnectionType t)
+    {
+        head.DrawLinesInTree(type, type == t);
+    }
 }
 
 /// <summary>
@@ -51,11 +79,12 @@ public class NodeConnectionData {
     public Node parent;
     public List<Node> children;
     public NodeMap tree;
+    public LineRenderer lineRenderer;
 
-    public NodeConnectionData(Node parent = null, List<Node> children = null, NodeMap tree = null)
+    public NodeConnectionData(Node parent, List<Node> children, LineRenderer lineRenderer)
     {
         this.parent = parent;
-        this.tree = tree;
+        this.lineRenderer = lineRenderer;
 
         if (children != null)
         {
@@ -78,29 +107,86 @@ public abstract class Node : MonoBehaviour
     private Dictionary<ConnectionType, NodeConnectionData> connectionsdata;
 
     /// <summary>
-    /// This is implemented in the parent and it's responsible for telling the node what connections to have
+    /// This is implemented in the parent and it's responsible for telling the node what connections to have!
+    /// <para>NEVER USE THIS!</para>
     /// </summary>
     /// <returns>What types of connections to have</returns>
-    public abstract ConnectionType[] GetConnectionTypesFromExtendingNode();
+    public abstract Dictionary<ConnectionType, NodeConnectionData> GetConnections();
 
-    private void Awake()
-    {
-        connectionsdata = new Dictionary<ConnectionType, NodeConnectionData>();
+    /// <summary>
+    /// Is called on Awake
+    /// <para>Use this function to setup a node</para>
+    /// </summary>
+    protected abstract void Initialize();
 
-        //Add all of the connection types to the dictionary
-        foreach (ConnectionType t in GetConnectionTypesFromExtendingNode())
-        {
-            connectionsdata.Add(t, new NodeConnectionData());
+    private static int lineSegments = 50;
+
+    public static Color backgroundLineColor = new Color(170f/255f, 170f/255f, 170f/255f, 40f/255f);
+
+    public RectTransform Rect {
+        get {
+            return GetComponent<RectTransform>();
         }
     }
 
-    /// <summary>
-    /// This function is called from the parent and will make the node know what node tree it is in
-    /// </summary>
-    /// <param name="t"></param>
-    public void Initialize(ConnectionType t)
+    private void Awake()
     {
-        
+        connectionsdata = GetConnections();
+
+        GenerateLines();
+
+        Initialize();
+    }
+
+    public void DrawLinesInTree(ConnectionType t, bool selected)
+    {
+        Debug.Log("Drawn Connections");
+
+        if (!HasConnection(t)) return;
+
+        foreach (Node n in GetChildren(t))
+        {
+            n.DrawLinesInTree(t, selected);
+        }
+
+        if (selected)
+        {
+            GetLineRenderer(t).material.SetColor("_TintColor", Color.white);
+        } else
+        {
+            GetLineRenderer(t).material.SetColor("_TintColor", backgroundLineColor);
+        }
+    }
+
+    public void GenerateLines()
+    {
+        foreach (ConnectionType t in connectionsdata.Keys)
+        {
+            if (GetParent(t) != null)
+            {
+                Vector3 start = new Vector3(-Rect.anchoredPosition.x + GetParent(t).Rect.rect.width / 2, -Rect.anchoredPosition.y - GetComponent<LayoutElement>().minHeight, -50);
+                Vector3 end = new Vector3(0, 0, -50);
+
+                Vector3[] path = GetLinePathOfType(t, start, end);
+                GetLineRenderer(t).positionCount = path.Count();
+                GetLineRenderer(t).SetPositions(path);
+            }
+        }
+    }
+
+    private Vector3[] GetLinePathOfType(ConnectionType t, Vector3 start, Vector3 end)
+    {
+        switch (t)
+        {
+            default:
+                return LineHelper.GetEasedLine(start, end, lineSegments, 2f);
+
+            case ConnectionType.Default:
+                return LineHelper.GetEasedLine(start, end, lineSegments, 2f);
+
+            case ConnectionType.Power:
+                return LineHelper.GetStraightLine(start, end);
+        }
     }
 
     /// <summary>
@@ -138,11 +224,44 @@ public abstract class Node : MonoBehaviour
         return connectionsdata[t].children;
     }
 
-    public IEnumerator<ConnectionType> GetConnectionTypes()
+    private LineRenderer GetLineRenderer(ConnectionType t)
     {
-        foreach (KeyValuePair<ConnectionType, NodeConnectionData> data in connectionsdata)
+        return connectionsdata[t].lineRenderer;
+    }
+
+    public List<ConnectionType> GetConnectionTypes()
+    {
+        List<ConnectionType> types = new List<ConnectionType>();
+
+        foreach (ConnectionType t in connectionsdata.Keys)
         {
-            yield return data.Key;
+            types.Add(t);
+        }
+
+        return types;
+    }
+
+    private IEnumerable<LineRenderer> GetLineRenderers()
+    {
+        foreach (NodeConnectionData d in connectionsdata.Values)
+        {
+            yield return d.lineRenderer;
+        }
+    }
+
+    public void SetNodeMap(NodeMap map)
+    {
+        connectionsdata[map.Type].tree = map;
+    }
+
+    public bool HasConnection(ConnectionType t)
+    {
+        if (GetConnectionTypes().Contains(t))
+        {
+            return true;
+        } else
+        {
+            return false;
         }
     }
 }

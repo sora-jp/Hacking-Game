@@ -37,7 +37,7 @@ public static class LineHelper
     /// <param name="end">The end point of the line</param>
     /// <param name="iterations">How many segments to create. Defaults to 2</param>
     /// <returns>An array containing all the points in the line</returns>
-    public static Vector3[] GetStraightLine(Vector2 start, Vector2 end, int iterations = 2)
+    public static Vector3[] GetStraightLine(Vector3 start, Vector3 end, int iterations = 2)
     {
         List<Vector3> output = new List<Vector3>();
 

@@ -1,98 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class DefaultNode : Node {
-
-    /// <summary>
-    /// All variables below are set in the inspector
-    /// </summary>
-    public DefaultNode[] powerChilds;
-    public DefaultNode powerParent;
-
-    public DefaultNode parent;
-    public DefaultNode[] children;
-
-    public Vector3 ParentLineAdjustment;
-
-    public string NodeID;
-
-    public bool setup;
-
-    public float graphicWidth;
-    public float graphicHeight;
-
-    /// <summary>
-    /// Theese nodes are somehow contained in the nodes parents/children relations
-    /// </summary>
-    public List<DefaultNode> internetChildren = new List<DefaultNode>();
-    public DefaultNode internetParent;
+public sealed class DefaultNode : Node {
 
     public LineRenderer lineRenderer;
 
-    private void Awake()
+    public DefaultNode[] powerChildren = new DefaultNode[0];
+    public DefaultNode powerParent;
+
+    public override Dictionary<ConnectionType, NodeConnectionData> GetConnections()
     {
-        if (transform.parent.GetComponent<DefaultNode>() != null)
+        NodeConnectionData DefaultData = new NodeConnectionData(transform.parent.GetComponent<Node>(), new List<Node>(GetChildren()), transform.Find("Default Connection").GetComponent<LineRenderer>());
+        NodeConnectionData PowerData = new NodeConnectionData(powerParent, new List<Node>(powerChildren), transform.Find("Power Connection").GetComponent<LineRenderer>());
+
+        return new Dictionary<ConnectionType, NodeConnectionData>() { { ConnectionType.Default, DefaultData }, { ConnectionType.Power, PowerData }};
+    }
+
+    protected override void Initialize()
+    {
+        
+    }
+
+    private IEnumerable<Node> GetChildren()
+    {
+        Debug.Log("Children");
+        foreach (Node n in GetComponentsInChildren<Node>())
         {
-            internetParent = transform.parent.GetComponent<DefaultNode>();
-        } 
-
-        foreach(DefaultNode n in GetComponentsInChildren<DefaultNode>())
-        {
-            internetChildren.Add(n);
+            if (n.transform.parent == transform)
+            {
+                yield return n;
+            }
         }
-
-        graphicWidth = GetComponent<LayoutElement>().minWidth;
-        graphicHeight = GetComponent<LayoutElement>().minHeight;
-
-        lineRenderer = GetComponent<LineRenderer>();
-    }
-
-    private IEnumerator Start()
-    {
-        ParentLineAdjustment = new Vector3((transform.parent as RectTransform).rect.size.x/2, -graphicHeight);
-
-        yield return null;
-        if (internetParent != null) {
-            DrawLinesToParent();
-        }
-    }
-
-    public void MakeCurrentNode()
-    {
-        FindObjectOfType<Hackmap>().SetCurrentNode(this);
-    }
-
-    public void DrawLinesToParent ()
-    {
-        foreach(DefaultNode node in internetChildren)
-        {
-            DrawLineToParent(node);
-        }
-    }
-
-    public void DrawLineToParent(DefaultNode child)
-    {
-        RectTransform Childrt = child.GetComponent<RectTransform>();
-        Vector3[] positions = LineHelper.GetEasedLine(new Vector3(0 , 0, -50), new Vector3(-Childrt.anchoredPosition.x, -Childrt.anchoredPosition.y, -50)+child.ParentLineAdjustment, 50, 3);
-        child.lineRenderer.positionCount = positions.Length;
-        child.lineRenderer.SetPositions(positions);
-        Debug.Log("Thing");
-    }
-
-    private void OnValidate()
-    {
-        if (setup)
-        {
-            setup = false;
-            DrawLinesToParent();
-            Debug.Log("Setup");
-        }
-    }
-
-    public override ConnectionType[] GetConnectionTypesFromExtendingNode()
-    {
-        throw new System.NotImplementedException();
     }
 }

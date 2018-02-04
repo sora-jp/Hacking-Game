@@ -3,8 +3,8 @@
 	Properties
 	{
 		_MainTex("Particle Texture", 2D) = "white" {}
-
 		_Rect("XY=Max, ZW=Min", Vector) = (1,1,0,0)
+		_TintColor("Tint Color", Color) = (1, 1, 1, 1)
 	}
 	SubShader
 	{
@@ -43,6 +43,7 @@
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			float4 _Rect;
+			float4 _TintColor;
 			
 			v2f vert (appdata v)
 			{
@@ -63,7 +64,7 @@
 				clip(_Rect.z - v.x);
 				clip(_Rect.w - v.y);
 
-				return col;
+				return saturate(col*_TintColor);
 			}
 			ENDCG
 		}
