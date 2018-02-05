@@ -89,7 +89,6 @@ public class Player : MonoBehaviour {
         {
             d = DeviceHelper.DeviceFromID((device as Device).parent);
             i++;
-            if (i > 5) break;
             c = c && (d is IHackable) ? (d as IHackable).HasBeenHacked() : true;
         }
         return c;
