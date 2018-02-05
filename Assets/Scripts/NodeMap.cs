@@ -138,7 +138,7 @@ public abstract class Node : MonoBehaviour
     {
         connectionsdata = GetConnections();
 
-        device = GetDevice();
+        deviceID = GetDevice();
 
         GenerateLines();
 
