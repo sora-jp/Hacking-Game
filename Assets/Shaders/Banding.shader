@@ -58,7 +58,7 @@
 				fixed4 col = tex2D(_MainTex, i.uv);
 				// apply fog
 				UNITY_APPLY_FOG(i.fogCoord, col);
-				return col + tex2D(_BandTex, i.uv * _Size) * _Str * _Col;
+				return col + tex2D(_BandTex, i.uv * _Size * _ScreenParams.y) * _Str * _Col;
 			}
 			ENDCG
 		}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Hacking;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour {
 
@@ -10,7 +11,9 @@ public class Player : MonoBehaviour {
     public bool doUpdate;
     public Image cursor;
     public Sprite normalCursor;
-    public Sprite hitCursor;
+    [FormerlySerializedAs("hitCursor")]
+    public Sprite hackCursor;
+    public Sprite noHackCursor;
 
     private void Awake()
     {
@@ -24,6 +27,7 @@ public class Player : MonoBehaviour {
         cursor.sprite = normalCursor;
 
         if (!doUpdate) return;
+<<<<<<< HEAD
         var device = GetDeviceUnderCursor(Camera.main, hackableLayer);
         if (device != null)
         {
@@ -37,6 +41,30 @@ public class Player : MonoBehaviour {
                 (device as IHackable).Hack(this);
             }
         }
+=======
+		var device = GetDeviceUnderCursor(Camera.main, hackableLayer);
+		if (device != null)
+		{
+			// Hit a device
+			if (device is IHackable)
+			{
+                if (CanHackDevice(device))
+                {
+                    cursor.sprite = hackCursor;
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        // Hack the device we hit
+                        (device as IHackable).Hack(this);
+                    }
+                }
+                else
+                {
+                    cursor.sprite = noHackCursor;
+                }
+			}
+		}
+>>>>>>> hacking
     }
 	
     public static IDevice GetDeviceUnderCursor(Camera c, LayerMask layer)
@@ -68,5 +96,19 @@ public class Player : MonoBehaviour {
             return device;
         }
         return null;
+    }
+
+    public static bool CanHackDevice(IDevice device, bool camera = false)
+    {
+        IDevice d = device;
+        bool c = (device as IHackable).CanBeHacked(camera);
+        int i = 0;
+        while (!string.IsNullOrEmpty((d as Device).parent))
+        {
+            d = DeviceHelper.DeviceFromID((device as Device).parent);
+            i++;
+            c = c && (d is IHackable) ? (d as IHackable).HasBeenHacked() : true;
+        }
+        return c;
     }
 }

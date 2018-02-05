@@ -21,6 +21,7 @@ public class RandomText : MonoBehaviour
 
         while(true) 
         {
+            if (str == null) yield return null;
             string s = GetRandomAlphaNumeric(Random.Range(minl, maxl));
             str.Enqueue(s);
             
@@ -39,7 +40,7 @@ public class RandomText : MonoBehaviour
     
     public static string GetRandomAlphaNumeric(int length)
     {
-        var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789======================================================================";
+        var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789?=(){}[]-:;";
         return new string(chars.Select(c => chars[Random.Range(0, chars.Length)]).Take(length).ToArray());
     }
     
