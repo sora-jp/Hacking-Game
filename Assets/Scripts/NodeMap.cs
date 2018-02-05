@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Hacking;
 
 public enum ConnectionType {
     Default, Power
@@ -111,13 +112,17 @@ public abstract class Node : MonoBehaviour
     /// <para>NEVER USE THIS!</para>
     /// </summary>
     /// <returns>What types of connections to have</returns>
-    public abstract Dictionary<ConnectionType, NodeConnectionData> GetConnections();
+    protected abstract Dictionary<ConnectionType, NodeConnectionData> GetConnections();
+
+    protected abstract IDevice GetDevice();
 
     /// <summary>
     /// Is called on Awake
     /// <para>Use this function to setup a node</para>
     /// </summary>
     protected abstract void Initialize();
+
+    private IDevice device;
 
     private static int lineSegments = 50;
 
@@ -132,6 +137,8 @@ public abstract class Node : MonoBehaviour
     private void Awake()
     {
         connectionsdata = GetConnections();
+
+        device = GetDevice();
 
         GenerateLines();
 

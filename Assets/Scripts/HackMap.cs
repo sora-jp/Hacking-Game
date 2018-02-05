@@ -63,12 +63,15 @@ public class HackMap : MonoBehaviour {
         normalSprite = DefaultButton.GetComponent<Image>().sprite;
 
         //Get and initialise all the node maps
-        foreach (Node n in GetTopLevelNodesIn(content))
+        foreach (Node n in GetComponentsInChildren<Node>())
         {
             foreach (ConnectionType t in n.GetConnectionTypes())
             {
-                NodeMap map = new NodeMap(n, t);
-                trees.Add(map);
+                if (n.GetParent(t) == null)
+                {
+                    NodeMap map = new NodeMap(n, t);
+                    trees.Add(map);
+                }
             }
         }
     }
@@ -126,16 +129,6 @@ public class HackMap : MonoBehaviour {
         foreach (NodeMap n in trees)
         {
             if (n.Type == t)
-            {
-                yield return n;
-            }
-        }
-    }
-
-    public IEnumerable<Node> GetTopLevelNodesIn(GameObject obj) {
-        foreach(Node n in obj.GetComponentsInChildren<Node>())
-        {
-            if (n.transform.parent == obj.transform)
             {
                 yield return n;
             }
