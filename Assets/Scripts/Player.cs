@@ -27,21 +27,6 @@ public class Player : MonoBehaviour {
         cursor.sprite = normalCursor;
 
         if (!doUpdate) return;
-<<<<<<< HEAD
-        var device = GetDeviceUnderCursor(Camera.main, hackableLayer);
-        if (device != null)
-        {
-            // Hit a device
-            Debug.Log("YEEEEEEEEEEEEEEEEEE");
-            cursor.sprite = hitCursor;
-
-            if (Input.GetMouseButtonDown(0) && device is IHackable)
-            {
-                // Hack the device we hit
-                (device as IHackable).Hack(this);
-            }
-        }
-=======
 		var device = GetDeviceUnderCursor(Camera.main, hackableLayer);
 		if (device != null)
 		{
@@ -64,7 +49,6 @@ public class Player : MonoBehaviour {
                 }
 			}
 		}
->>>>>>> hacking
     }
 	
     public static IDevice GetDeviceUnderCursor(Camera c, LayerMask layer)
