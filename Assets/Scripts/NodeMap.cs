@@ -114,7 +114,7 @@ public abstract class Node : MonoBehaviour
     /// <returns>What types of connections to have</returns>
     protected abstract Dictionary<ConnectionType, NodeConnectionData> GetConnections();
 
-    protected abstract IDevice GetDevice();
+    protected abstract string GetDevice();
 
     /// <summary>
     /// Is called on Awake
@@ -122,9 +122,9 @@ public abstract class Node : MonoBehaviour
     /// </summary>
     protected abstract void Initialize();
 
-    private IDevice device;
+    protected string deviceID;
 
-    private static int lineSegments = 50;
+    private static int lineSegments = 25;
 
     public static Color backgroundLineColor = new Color(170f/255f, 170f/255f, 170f/255f, 40f/255f);
 

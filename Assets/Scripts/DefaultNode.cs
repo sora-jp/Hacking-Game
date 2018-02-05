@@ -10,9 +10,9 @@ public sealed class DefaultNode : Node {
     public DefaultNode[] powerChildren = new DefaultNode[0];
     public DefaultNode powerParent;
 
-    public IDevice device;
+    public string deviceID;
 
-    public override Dictionary<ConnectionType, NodeConnectionData> GetConnections()
+    protected sealed override Dictionary<ConnectionType, NodeConnectionData> GetConnections()
     {
         NodeConnectionData DefaultData = new NodeConnectionData(transform.parent.GetComponent<Node>(), new List<Node>(GetChildren()), transform.Find("Default Connection").GetComponent<LineRenderer>());
         NodeConnectionData PowerData = new NodeConnectionData(powerParent, new List<Node>(powerChildren), transform.Find("Power Connection").GetComponent<LineRenderer>());
@@ -20,9 +20,9 @@ public sealed class DefaultNode : Node {
         return new Dictionary<ConnectionType, NodeConnectionData>() { { ConnectionType.Default, DefaultData }, { ConnectionType.Power, PowerData }};
     }
 
-    protected override IDevice GetDevice()
+    protected override string GetDevice()
     {
-        return device;
+        return deviceID;
     }
 
     protected override void Initialize()
